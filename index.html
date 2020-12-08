@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="contentContainer" class="content-container">
+
+        <div id="listContainer" class="list-container">
+            <div id="newListButtonContainer">
+                <button id="newListButton" class="new-list-button">+ New List</button>
+            </div>
+
+        </div>
+
+        <div id="taskContainer" class="task-container">
+            <div id="newTaskButtonContainer">
+                <button id="newTaskButton" class="new-task-button">+ New Task</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div id="listFormContainer" class="list-form-container">
+        
+    </div>
+     
+
+    <div id="taskFormContainer" class="task-form-container">
+        <form action="" id="taskForm" class="task-form">
+            <h2 class="task-form-header">Add a new task</h2>
+            <input class="form-input" name="taskTitle" type="text" placeholder="Task">
+            <div>
+                <label for="dueDate">Due Date</label>
+                <input class="form-input" name="dueDate" type="date">
+            </div>
+            <textarea class="form-input" name="text" name="taskDetails" type="text" placeholder="Details"></textarea>
+            <div>
+            <label>Color</label>
+                <div>
+                    <input type="color" id="head" name="head" value="#e66465">
+                    <label for="head">Color</label>
+                    <!-- <span class="color-input color-default"></span>
+                    <span class="color-input color-ff9aa2"></span>
+                    <span class="color-input color-ffb7b2"></span>
+                    <span class="color-input color-ffdac1"></span>
+                    <span class="color-input color-e2f0cb"></span>
+                    <span class="color-input color-b5ead7"></span>
+                    <span class="color-input color-c7ceea"></span> -->
+                </div>
+            </div>
+        </form>
+    </div>
+           
+    <script src="dist/main.js"></script>    
+</body>
+</html>

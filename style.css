@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.content-container {
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+    grid-template-rows: 50vh;
+}
+
+.list-container {
+    background-color: aliceblue;
+    margin: 0;
+    padding: 10px;
+}
+
+.task-container {
+    background-color: white;
+    margin: 0;
+    padding: 10px;
+}
+
+.new-list-button {
+    border-width: 0;
+    padding: 5px 20px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #7c8bff;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.new-list-button:hover,
+.new-list-button:focus {
+    background-color: #b19cd8
+}
+
+.new-task-button {
+    border-width: 0;
+    padding: 5px 20px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #679a7d;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.new-task-button:hover,
+.new-task-button:focus {
+    background-color: #aebc6e;
+}
+
+.task-form-container {
+    display: flex;
+    background-color: #d0d9a8;
+    max-width:420px;
+    padding: 10px;
+    border-radius: 5%;
+    justify-content: center;
+}
+
+.task-form {
+    display: grid;
+    border: solid 1px black;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-input {
+    font-size: 18px;
+    border: 2px black solid;
+    background-color: transparent;
+    line-height: 22px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.color-input {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+}
