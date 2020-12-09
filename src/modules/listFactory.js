@@ -2,26 +2,21 @@
 
 //list Object Prototype
 const listProto = {
-    editTitle(newTitle) {
-        this.title = newTitle;
+    editName(newName) {
+        this.name = newName;
     }
 }
 
 //list Object Factory Function
-const listFactory = (title,active) => {
+const listFactory = (name,active) => {
     let list = Object.create(listProto);
 
-    list.title = title;
+    list.name = name;
     list.id = Date.now().toString();
     list.active = active;
 
     return list;
 }
-
-//Add list function (Dont think this is needed)
-// const addlist = (listList,title,active) => {
-//     listList.push(listFactory(title,active));
-// }
 
 export default listFactory;
 

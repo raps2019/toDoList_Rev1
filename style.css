@@ -74,6 +74,11 @@ body {
     border-right: none;
     background: transparent;
     width: 200px;
+    margin-right: 5px;
+}
+
+.new-list-input:focus {
+    outline: none;
 }
 
 .submit-list-button {

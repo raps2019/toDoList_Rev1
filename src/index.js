@@ -15,16 +15,59 @@ const runApp = (() => {
     listContainer.appendChild(drawNewListButton());
     taskContainer.appendChild(drawNewTaskButton());
 
+
+    //Activate/Deactivate List Form when Add New List or Cancel Button Clicked
     document.addEventListener('click',function(e) {
         if(e.target.id === "newListButton" || e.target.id === "cancelListFormButton") {
-            if(e.target.parentNode.classList.contains('new-list-form-active') === false) {
+            let newListButtonContainer = document.getElementById('newListButtonContainer');
+            if(newListButtonContainer.classList.contains('new-list-form-active') === false) {
                 listContainer.appendChild(drawNewListForm());
-                e.target.parentNode.classList.add('new-list-form-active')
+                newListButtonContainer.classList.add('new-list-form-active')
             } else {
-                e.target.parentNode.classList.remove('new-list-form-active')
-                console.log(e.target.parentNode.parentNode)
+                newListButtonContainer.classList.remove('new-list-form-active')
                 document.getElementById('newListFormContainer').remove();
             }
         }
     })
+
+    let listArray = [];
+    let taskArray = [];
+
+    //Initialize List Array with Default List
+    listArray.push(listFactory('Default',true));
+
+    //Add List to Array when Submit List Button Clicked
+    document.addEventListener('click',function(e) {
+        if(e.target.id === "submitListButton") {
+            let listInput = document.getElementById('newListInput')
+            let listName = listInput.value;
+            //Check if list exists
+            for(let i = 0; i < listArray.length; i++) {
+                if (listArray[i].name.toLowerCase() === listName.toLowerCase()) {
+                    alert(`List ${listName} already exists`);
+                    return;
+                } 
+            }
+            for(let i = 0; i < listArray.length; i++) {
+                listArray[i].active = false;
+            }
+            listArray.push(listFactory(listName,true));
+            listInput.value = '';
+            console.log(listArray)
+        }
+    })
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 })();

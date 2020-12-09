@@ -2,8 +2,8 @@
 
 //Task Object Prototype Functions
 const taskProto = {
-    editTitle(newTitle) {
-        this.title = newTitle;
+    editName(newName) {
+        this.name = newName;
     },
     editDetails(newDetails) {
         this.details = newDetails;
@@ -27,12 +27,12 @@ const taskProto = {
 }
 
 //Task Factory Function
-const taskFactory = (title,details,dueDate,priority,list,active) => {
+const taskFactory = (name,details,dueDate,priority,list,active) => {
 
     let task = Object.create(taskProto);
     let completed = false;  
 
-    task.title = title;
+    task.name = name;
     task.details = details;
     task.dueDate = dueDate;
     task.priority = priority;
@@ -45,8 +45,8 @@ const taskFactory = (title,details,dueDate,priority,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,title,details,dueDate,priority,list) => {
-//     taskList.push(taskFactory(title,details,dueDate,priority,list));
+// const addTask = (taskList,name,details,dueDate,priority,list) => {
+//     taskList.push(taskFactory(name,details,dueDate,priority,list));
 // }
 
 export default taskFactory;

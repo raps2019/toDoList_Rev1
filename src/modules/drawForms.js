@@ -1,10 +1,11 @@
+//Draw Add New List Form
 const drawNewListForm = () => {
     let div = document.createElement('div');
     div.id = "newListFormContainer"
 
     let input = document.createElement('input');
     input.placeholder = 'Enter List Name';
-    input.name = 'listName';
+    input.id = 'newListInput';
     input.className = 'new-list-input'
 
     let submitButton = document.createElement('button');
@@ -27,3 +28,6 @@ const drawNewListForm = () => {
 export {
     drawNewListForm,
 }
+
+//Draw Add New Task or Edit Task Form
+//TODO

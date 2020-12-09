@@ -30,18 +30,61 @@ const runApp = (() => {
     listContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_2__.drawNewListButton)());
     taskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_2__.drawNewTaskButton)());
 
+
+    //Activate/Deactivate List Form when Add New List or Cancel Button Clicked
     document.addEventListener('click',function(e) {
         if(e.target.id === "newListButton" || e.target.id === "cancelListFormButton") {
-            if(e.target.parentNode.classList.contains('new-list-form-active') === false) {
+            let newListButtonContainer = document.getElementById('newListButtonContainer');
+            if(newListButtonContainer.classList.contains('new-list-form-active') === false) {
                 listContainer.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_3__.drawNewListForm)());
-                e.target.parentNode.classList.add('new-list-form-active')
+                newListButtonContainer.classList.add('new-list-form-active')
             } else {
-                e.target.parentNode.classList.remove('new-list-form-active')
-                console.log(e.target.parentNode.parentNode)
+                newListButtonContainer.classList.remove('new-list-form-active')
                 document.getElementById('newListFormContainer').remove();
             }
         }
     })
+
+    let listArray = [];
+    let taskArray = [];
+
+    //Initialize List Array with Default List
+    listArray.push((0,_modules_listFactory__WEBPACK_IMPORTED_MODULE_1__.default)('Default',true));
+
+    //Add List to Array when Submit List Button Clicked
+    document.addEventListener('click',function(e) {
+        if(e.target.id === "submitListButton") {
+            let listInput = document.getElementById('newListInput')
+            let listName = listInput.value;
+            //Check if list exists
+            for(let i = 0; i < listArray.length; i++) {
+                if (listArray[i].name.toLowerCase() === listName.toLowerCase()) {
+                    alert(`List ${listName} already exists`);
+                    return;
+                } 
+            }
+            for(let i = 0; i < listArray.length; i++) {
+                listArray[i].active = false;
+            }
+            listArray.push((0,_modules_listFactory__WEBPACK_IMPORTED_MODULE_1__.default)(listName,true));
+            listInput.value = '';
+            console.log(listArray)
+        }
+    })
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 })();
 
 /***/ }),
@@ -100,13 +143,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "drawNewListForm": () => /* binding */ drawNewListForm
 /* harmony export */ });
+//Draw Add New List Form
 const drawNewListForm = () => {
     let div = document.createElement('div');
     div.id = "newListFormContainer"
 
     let input = document.createElement('input');
     input.placeholder = 'Enter List Name';
-    input.name = 'listName';
+    input.id = 'newListInput';
     input.className = 'new-list-input'
 
     let submitButton = document.createElement('button');
@@ -128,6 +172,9 @@ const drawNewListForm = () => {
 
 
 
+//Draw Add New Task or Edit Task Form
+//TODO
+
 /***/ }),
 
 /***/ "./src/modules/listFactory.js":
@@ -144,26 +191,21 @@ __webpack_require__.r(__webpack_exports__);
 
 //list Object Prototype
 const listProto = {
-    editTitle(newTitle) {
-        this.title = newTitle;
+    editName(newName) {
+        this.name = newName;
     }
 }
 
 //list Object Factory Function
-const listFactory = (title,active) => {
+const listFactory = (name,active) => {
     let list = Object.create(listProto);
 
-    list.title = title;
+    list.name = name;
     list.id = Date.now().toString();
     list.active = active;
 
     return list;
 }
-
-//Add list function (Dont think this is needed)
-// const addlist = (listList,title,active) => {
-//     listList.push(listFactory(title,active));
-// }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (listFactory);
 
@@ -185,8 +227,8 @@ __webpack_require__.r(__webpack_exports__);
 
 //Task Object Prototype Functions
 const taskProto = {
-    editTitle(newTitle) {
-        this.title = newTitle;
+    editName(newName) {
+        this.name = newName;
     },
     editDetails(newDetails) {
         this.details = newDetails;
@@ -210,12 +252,12 @@ const taskProto = {
 }
 
 //Task Factory Function
-const taskFactory = (title,details,dueDate,priority,list,active) => {
+const taskFactory = (name,details,dueDate,priority,list,active) => {
 
     let task = Object.create(taskProto);
     let completed = false;  
 
-    task.title = title;
+    task.name = name;
     task.details = details;
     task.dueDate = dueDate;
     task.priority = priority;
@@ -228,8 +270,8 @@ const taskFactory = (title,details,dueDate,priority,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,title,details,dueDate,priority,list) => {
-//     taskList.push(taskFactory(title,details,dueDate,priority,list));
+// const addTask = (taskList,name,details,dueDate,priority,list) => {
+//     taskList.push(taskFactory(name,details,dueDate,priority,list));
 // }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskFactory);
