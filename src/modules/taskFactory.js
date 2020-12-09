@@ -14,8 +14,8 @@ const taskProto = {
     editPriority(newPriority) {
         this.priority = newPriority;
     },
-    editCategory(newCategory) {
-        this.category = newCategory;
+    editList(newList) {
+        this.list = newList;
     },
     toggleStatus() {
         if (this.completed === false) {
@@ -27,7 +27,7 @@ const taskProto = {
 }
 
 //Task Factory Function
-const taskFactory = (title,details,dueDate,priority,category,active) => {
+const taskFactory = (title,details,dueDate,priority,list,active) => {
 
     let task = Object.create(taskProto);
     let completed = false;  
@@ -36,7 +36,7 @@ const taskFactory = (title,details,dueDate,priority,category,active) => {
     task.details = details;
     task.dueDate = dueDate;
     task.priority = priority;
-    task.category = category;
+    task.list = list;
     task.active = active;
     task.completed = completed;
     task.id = Date.now().toString();
@@ -45,8 +45,8 @@ const taskFactory = (title,details,dueDate,priority,category,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,title,details,dueDate,priority,category) => {
-//     taskList.push(taskFactory(title,details,dueDate,priority,category));
+// const addTask = (taskList,title,details,dueDate,priority,list) => {
+//     taskList.push(taskFactory(title,details,dueDate,priority,list));
 // }
 
 export default taskFactory;
