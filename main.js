@@ -11,8 +11,10 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_taskFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/taskFactory */ "./src/modules/taskFactory.js");
 /* harmony import */ var _modules_listFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/listFactory */ "./src/modules/listFactory.js");
-/* harmony import */ var _modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/drawAddNewButtons */ "./src/modules/drawAddNewButtons.js");
-/* harmony import */ var _modules_drawForms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/drawForms */ "./src/modules/drawForms.js");
+/* harmony import */ var _modules_initializePage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/initializePage */ "./src/modules/initializePage.js");
+/* harmony import */ var _modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/drawAddNewButtons */ "./src/modules/drawAddNewButtons.js");
+/* harmony import */ var _modules_drawForms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/drawForms */ "./src/modules/drawForms.js");
+/* harmony import */ var _modules_drawLists__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/drawLists */ "./src/modules/drawLists.js");
 //Import Factory Functions
 
 
@@ -21,27 +23,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log('This should work')
+
+
+console.log('This should work!')
 
 const runApp = (() => {
-    const listContainer = document.querySelector('#listContainer');
-    const taskContainer = document.querySelector('#taskContainer')
 
-    listContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_2__.drawNewListButton)());
-    taskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_2__.drawNewTaskButton)());
+    let body = document.querySelector('body');
+
+    body.appendChild((0,_modules_initializePage__WEBPACK_IMPORTED_MODULE_2__.initializePage)());
+
+    let addListContainer = document.getElementById('addListContainer');
+    let addTaskContainer = document.getElementById('addTaskContainer');
+    
+
+    addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
+    addTaskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewTaskButton)());
 
 
-    //Activate/Deactivate List Form when Add New List or Cancel Button Clicked
-    document.addEventListener('click',function(e) {
-        if(e.target.id === "newListButton" || e.target.id === "cancelListFormButton") {
-            let newListButtonContainer = document.getElementById('newListButtonContainer');
-            if(newListButtonContainer.classList.contains('new-list-form-active') === false) {
-                listContainer.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_3__.drawNewListForm)());
-                newListButtonContainer.classList.add('new-list-form-active')
-            } else {
-                newListButtonContainer.classList.remove('new-list-form-active')
-                document.getElementById('newListFormContainer').remove();
-            }
+    //Activate New List Form when Add New List Button Clicked
+    document.addEventListener('click',function(e){
+        if(e.target.id === 'newListButton') {
+            let newListButtonContainer = document.getElementById('newListButtonContainer')
+            newListButtonContainer.remove();
+            addListContainer.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawNewListForm)());
+        }          
+    })
+
+    //Deactivate New List form when cancel button Clicked and Add New List Button Back
+    document.addEventListener('click', function(e) {
+        if(e.target.id === 'cancelListFormButton') {
+            let newListFormContainer = document.getElementById('newListFormContainer')
+            newListFormContainer.remove();
+            addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
         }
     })
 
@@ -50,29 +64,80 @@ const runApp = (() => {
 
     //Initialize List Array with Default List
     listArray.push((0,_modules_listFactory__WEBPACK_IMPORTED_MODULE_1__.default)('Default',true));
+    listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray))
 
     //Add List to Array when Submit List Button Clicked
     document.addEventListener('click',function(e) {
         if(e.target.id === "submitListButton") {
             let listInput = document.getElementById('newListInput')
             let listName = listInput.value;
+            if (listName === '') {
+                alert('Enter a name for the list');
+                return;
+            }
             //Check if list exists
             for(let i = 0; i < listArray.length; i++) {
                 if (listArray[i].name.toLowerCase() === listName.toLowerCase()) {
-                    alert(`List ${listName} already exists`);
+                    alert(`${listName} already exists`);
                     return;
                 } 
             }
             for(let i = 0; i < listArray.length; i++) {
                 listArray[i].active = false;
             }
+            //Push new list to array and clear input text box
             listArray.push((0,_modules_listFactory__WEBPACK_IMPORTED_MODULE_1__.default)(listName,true));
             listInput.value = '';
-            console.log(listArray)
+            document.getElementById('listRowsContainer').remove();
+            listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+            let newListFormContainer = document.getElementById('newListFormContainer')
+            newListFormContainer.remove();
+            addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
         }
     })
 
- 
+    //Change Active List by Clicking on List Row
+    document.addEventListener('click',function(e) {
+        if(e.target.classList.contains('inactive-list')) {
+            let listId = e.target.parentNode.dataset.listId;
+            for (let i = 0; i < listArray.length; i++) {
+                if (listArray[i].id === listId) {
+                    listArray[i].active = true;
+                } else {
+                    listArray[i].active = false;
+                }
+            }
+        }
+        let listRowsContainer = document.getElementById('listRowsContainer');
+        listRowsContainer.remove();
+        listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+    })
+
+    //Delete List when Delete Button Clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === 'deleteListButton') {
+            let listId = e.target.parentNode.dataset.listId;
+            listArray = listArray.filter(list => list.id != listId);
+            listRowsContainer.remove();
+            listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+        }
+    })
+
+    //Edit List when Edit Button Clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === 'editListButton') {
+            let listId = e.target.parentNode.dataset.listId;
+            let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
+            console.log(targetListRow);
+            targetListRow.innerHTML = ' ';
+            ((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawEditListForm)(listArray,listId,targetListRow))
+            // addListContainer.appendChild(drawEditListForm(listArray,listId));
+        }
+    })
+
+
+
+    
 
 
 
@@ -141,12 +206,14 @@ const drawNewTaskButton = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "drawNewListForm": () => /* binding */ drawNewListForm
+/* harmony export */   "drawNewListForm": () => /* binding */ drawNewListForm,
+/* harmony export */   "drawEditListForm": () => /* binding */ drawEditListForm
 /* harmony export */ });
 //Draw Add New List Form
 const drawNewListForm = () => {
     let div = document.createElement('div');
     div.id = "newListFormContainer"
+    div.className = "new-list-form-container"
 
     let input = document.createElement('input');
     input.placeholder = 'Enter List Name';
@@ -170,10 +237,146 @@ const drawNewListForm = () => {
     return div;
 }
 
+//Draw Edit List Form
+const drawEditListForm = (listArray,id,targetDiv) => {
+    let div = document.createElement('div');
+    div.id = "editListFormContainer"
+    div.className = "edit-list-form-container"
+
+    let input = document.createElement('input');
+    let listName = listArray.find(list => list.id === id).name;
+    input.placeholder = listName;
+    input.id = 'editListInput';
+    input.className = 'edit-list-input'
+
+    let submitButton = document.createElement('button');
+    submitButton.id = 'saveListButton';
+    submitButton.className = 'save-list-button';
+    submitButton.innerHTML = 'Save';
+
+    let cancelButton = document.createElement('button');
+    cancelButton.id = 'cancelEditListFormButton';
+    cancelButton.className = 'cancel-edit-list-form-button';
+    cancelButton.innerHTML = 'Cancel';
+    
+    targetDiv.appendChild(input);
+    targetDiv.appendChild(submitButton);
+    targetDiv.appendChild(cancelButton);
+}
+
 
 
 //Draw Add New Task or Edit Task Form
 //TODO
+
+/***/ }),
+
+/***/ "./src/modules/drawLists.js":
+/*!**********************************!*
+  !*** ./src/modules/drawLists.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "drawLists": () => /* binding */ drawLists
+/* harmony export */ });
+const drawLists = (listArray) => {
+    let div = document.createElement('div');
+    div.id = "listRowsContainer"
+
+    for (let i = 0; i < listArray.length; i++) {
+        let listRow = document.createElement('div');
+        listRow.dataset.listId = listArray[i].id;
+        listRow.className = 'list-row'
+
+        let listNameP = document.createElement('p');
+        listNameP.innerHTML = listArray[i].name;
+        listNameP.className = 'list-name'
+        listNameP.classList.add('inactive-list')
+
+        if (listArray[i].active === true) {
+            listNameP.classList.remove('inactive-list');
+            listNameP.classList.add('active-list');
+        }
+        
+        listRow.appendChild(listNameP);
+
+        if (listArray[i].active === true){
+            let editListButton = document.createElement('button');
+            editListButton.className = 'edit-list-button';
+            editListButton.id = 'editListButton'
+            editListButton.innerHTML = 'Edit'
+            listRow.append(editListButton);
+
+            let deleteListButton = document.createElement('button');
+            deleteListButton.className = 'delete-list-button';
+            deleteListButton.id = 'deleteListButton'
+            deleteListButton.innerHTML = 'Delete'
+            listRow.append(deleteListButton);
+        }
+        div.appendChild(listRow);
+    }
+    
+    return div;
+}
+
+ 
+
+/***/ }),
+
+/***/ "./src/modules/initializePage.js":
+/*!***************************************!*
+  !*** ./src/modules/initializePage.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initializePage": () => /* binding */ initializePage
+/* harmony export */ });
+const initializePage = () => {
+    let contentContainer = document.createElement('div');
+    contentContainer.id = 'contentContainer';
+    contentContainer.className = 'content-container';
+
+    let listContainer = document.createElement('div');
+    listContainer.id = 'listContainer';
+    listContainer.className = 'list-container';
+
+    let listHeader = document.createElement('div');
+    listHeader.innerHTML = 'Lists'
+
+    let addListContainer = document.createElement('div');
+    addListContainer.id = 'addListContainer';
+    
+    let listContentContainer = document.createElement('div');
+    listContentContainer.id = 'listContentContainer'
+
+    
+    listContainer.appendChild(listContentContainer);
+    listContainer.appendChild(addListContainer);
+
+    let taskContainer = document.createElement('div');
+    taskContainer.id = 'taskContainer';
+    taskContainer.className = 'task-container';
+
+    let addTaskContainer = document.createElement('div');
+    addTaskContainer.id = 'addTaskContainer'
+
+    let taskContentContainer = document.createElement('div');
+    taskContentContainer.id = 'taskContentContainer';
+
+    taskContainer.appendChild(addTaskContainer);
+    taskContainer.appendChild(taskContentContainer);
+
+    contentContainer.appendChild(listContainer);
+    contentContainer.appendChild(taskContainer);
+
+    return contentContainer;
+}
+
+
 
 /***/ }),
 
