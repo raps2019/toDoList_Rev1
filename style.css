@@ -8,6 +8,8 @@ body {
     display: grid;
     grid-template-columns: 2fr 4fr;
     grid-template-rows: 100vh;
+    margin:0;
+    padding:0;
 }
 
 .list-container {
@@ -24,7 +26,8 @@ body {
 
 .new-list-button {
     border-width: 0;
-    padding: 5px 20px;
+    padding: 5px 10px;
+    margin-top: 15px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -73,8 +76,8 @@ body {
     border-left: none;
     border-right: none;
     background: transparent;
-    width: 200px;
-    margin-right: 5px;
+    width: auto;
+    margin-right: 30px;
 }
 
 .new-list-input:focus {
@@ -84,13 +87,15 @@ body {
 .submit-list-button {
     border-width: 0;
     margin: 5px;
-    padding: 5px 20px;
+    padding: 5px 0px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #6dc091;
     color: #ecf0f1;
     transition: background-color .3s;
+    align-items: center;
+    text-align: center;
 }
 
 .submit-list-button:hover {
@@ -108,7 +113,7 @@ body {
 .cancel-list-form-button {
     border-width: 0;
     margin: 5px;
-    padding: 5px 20px;
+    padding: 5px 0px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -129,6 +134,167 @@ body {
     background-color: #888888;
 }
 
+.new-list-form-container {
+    display: grid;
+    grid-template-columns: 200px 60px 60px;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    margin: 25px 0 30px 0;
+    align-items: center;
+}
+
+.edit-list-form-container {
+    display: grid;
+    grid-template-columns: 200px 60px 60px;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    margin: 25px 0 30px 0;
+    align-items: center;
+}
+
+/* */
+
+.edit-list-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: transparent;
+    width: auto;
+    margin-right: 30px;
+}
+
+.edit-list-input:focus {
+    outline: none;
+}
+
+.save-list-button {
+    border-width: 0;
+    margin: 5px;
+    padding: 5px 0px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #6dc091;
+    color: #ecf0f1;
+    transition: background-color .3s;
+    align-items: center;
+    text-align: center;
+}
+
+.save-list-button:hover {
+    background-color: #6ed37f;
+}
+
+.save-list-button:focus {
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+.save-list-button:active {
+    background-color: #888888;
+}
+
+.cancel-edit-list-form-button {
+    border-width: 0;
+    margin: 5px;
+    padding: 5px 0px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #c75f5f;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.cancel-edit-list-form-button:hover {
+    background-color: #eb5757;
+}
+
+.cancel-edit-list-form-button:focus {
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+.cancel-edit-list-form-button:active {
+    background-color: #888888;
+}
+
+/* */
+
+.list-row {
+    display: grid;
+    grid-template-columns: 200px 60px 60px;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    margin: 10px 0 10px 0;
+    align-items: center;
+}
+
+.edit-list-button {
+    border-width: 0;
+    height: 20px;
+    width: auto;
+    margin: 5px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #6d87c0;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.edit-list-button:hover {
+    background-color: #5c82ff;
+}
+
+.edit-list-button:focus {
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+.edit-list-button:active {
+    background-color: #888888;
+}
+
+.delete-list-button {
+    border-width: 0;
+    height: 20px;
+    width: auto;
+    margin: 5px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: #c06d6d;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.delete-list-button:hover {
+    background-color: #ff5c5c;
+}
+
+.delete-list-button:focus {
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+.delete-list-button:active {
+    background-color: #888888;
+}
+
+.active-list {
+    color: black;
+    font-weight: 700;
+}
+
+.inactive-list {
+    color: rgb(137, 171, 182)
+}
+
+.inactive-list:hover {
+    color: black;
+    cursor: pointer;
+}
 
 
 
