@@ -25,7 +25,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log('This should work!')
+console.log('This should work now!')
 
 const runApp = (() => {
 
@@ -35,11 +35,9 @@ const runApp = (() => {
 
     let addListContainer = document.getElementById('addListContainer');
     let addTaskContainer = document.getElementById('addTaskContainer');
-    
 
     addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
     addTaskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewTaskButton)());
-
 
     //Activate New List Form when Add New List Button Clicked
     document.addEventListener('click',function(e){
@@ -47,6 +45,11 @@ const runApp = (() => {
             let newListButtonContainer = document.getElementById('newListButtonContainer')
             newListButtonContainer.remove();
             addListContainer.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawNewListForm)());
+            //Remove edit and delete buttong for tasks while new list input active
+            document.getElementById('editListButton').remove();
+            document.getElementById('deleteListButton').remove();
+            // Focus on New List Input 
+            document.getElementById('newListInput').focus();
         }          
     })
 
@@ -107,10 +110,11 @@ const runApp = (() => {
                     listArray[i].active = false;
                 }
             }
-        }
-        let listRowsContainer = document.getElementById('listRowsContainer');
-        listRowsContainer.remove();
-        listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+            let listRowsContainer = document.getElementById('listRowsContainer');
+            listRowsContainer.remove();
+            listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+        } 
+        
     })
 
     //Delete List when Delete Button Clicked
@@ -128,13 +132,20 @@ const runApp = (() => {
         if (e.target.id === 'editListButton') {
             let listId = e.target.parentNode.dataset.listId;
             let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
-            console.log(targetListRow);
             targetListRow.innerHTML = ' ';
-            ((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawEditListForm)(listArray,listId,targetListRow))
-            // addListContainer.appendChild(drawEditListForm(listArray,listId));
+            targetListRow.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawEditListForm)(listArray,listId));
+            
+            // focus on input field
+            document.getElementById('editListInput').focus();
+
+            // remove add new list button while edit list active
+            document.getElementById('newListButtonContainer').remove();
         }
     })
 
+    document.addEventListener('click', function(e) {
+        console.log(e.target)
+    })
 
 
     
@@ -238,14 +249,14 @@ const drawNewListForm = () => {
 }
 
 //Draw Edit List Form
-const drawEditListForm = (listArray,id,targetDiv) => {
+const drawEditListForm = (listArray,id) => {
     let div = document.createElement('div');
     div.id = "editListFormContainer"
     div.className = "edit-list-form-container"
 
     let input = document.createElement('input');
     let listName = listArray.find(list => list.id === id).name;
-    input.placeholder = listName;
+    // input.placeholder = listName;
     input.id = 'editListInput';
     input.className = 'edit-list-input'
 
@@ -259,9 +270,11 @@ const drawEditListForm = (listArray,id,targetDiv) => {
     cancelButton.className = 'cancel-edit-list-form-button';
     cancelButton.innerHTML = 'Cancel';
     
-    targetDiv.appendChild(input);
-    targetDiv.appendChild(submitButton);
-    targetDiv.appendChild(cancelButton);
+    div.appendChild(input);
+    div.appendChild(submitButton);
+    div.appendChild(cancelButton);
+
+    return div
 }
 
 

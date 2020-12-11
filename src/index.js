@@ -8,7 +8,7 @@ import { drawNewListButton, drawNewTaskButton } from './modules/drawAddNewButton
 import { drawNewListForm, drawEditListForm } from './modules/drawForms';
 import { drawLists } from './modules/drawLists'
 
-console.log('This should work!')
+console.log('This should work now!')
 
 const runApp = (() => {
 
@@ -18,11 +18,9 @@ const runApp = (() => {
 
     let addListContainer = document.getElementById('addListContainer');
     let addTaskContainer = document.getElementById('addTaskContainer');
-    
 
     addListContainer.appendChild(drawNewListButton());
     addTaskContainer.appendChild(drawNewTaskButton());
-
 
     //Activate New List Form when Add New List Button Clicked
     document.addEventListener('click',function(e){
@@ -30,6 +28,11 @@ const runApp = (() => {
             let newListButtonContainer = document.getElementById('newListButtonContainer')
             newListButtonContainer.remove();
             addListContainer.appendChild(drawNewListForm());
+            //Remove edit and delete buttong for tasks while new list input active
+            document.getElementById('editListButton').remove();
+            document.getElementById('deleteListButton').remove();
+            // Focus on New List Input 
+            document.getElementById('newListInput').focus();
         }          
     })
 
@@ -90,10 +93,11 @@ const runApp = (() => {
                     listArray[i].active = false;
                 }
             }
-        }
-        let listRowsContainer = document.getElementById('listRowsContainer');
-        listRowsContainer.remove();
-        listContentContainer.appendChild(drawLists(listArray));
+            let listRowsContainer = document.getElementById('listRowsContainer');
+            listRowsContainer.remove();
+            listContentContainer.appendChild(drawLists(listArray));
+        } 
+        
     })
 
     //Delete List when Delete Button Clicked
@@ -111,13 +115,20 @@ const runApp = (() => {
         if (e.target.id === 'editListButton') {
             let listId = e.target.parentNode.dataset.listId;
             let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
-            console.log(targetListRow);
             targetListRow.innerHTML = ' ';
-            (drawEditListForm(listArray,listId,targetListRow))
-            // addListContainer.appendChild(drawEditListForm(listArray,listId));
+            targetListRow.appendChild(drawEditListForm(listArray,listId));
+            
+            // focus on input field
+            document.getElementById('editListInput').focus();
+
+            // remove add new list button while edit list active
+            document.getElementById('newListButtonContainer').remove();
         }
     })
 
+    document.addEventListener('click', function(e) {
+        console.log(e.target)
+    })
 
 
     

@@ -87,7 +87,7 @@ body {
 .submit-list-button {
     border-width: 0;
     margin: 5px;
-    padding: 5px 0px;
+    padding: 5px 5px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -113,7 +113,7 @@ body {
 .cancel-list-form-button {
     border-width: 0;
     margin: 5px;
-    padding: 5px 0px;
+    padding: 5px 5px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -136,22 +136,20 @@ body {
 
 .new-list-form-container {
     display: grid;
-    grid-template-columns: 200px 60px 60px;
+    grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
     justify-content: center;
     height: 20px;
     margin: 25px 0 30px 0;
-    align-items: center;
 }
 
 .edit-list-form-container {
     display: grid;
-    grid-template-columns: 200px 60px 60px;
+    grid-template-columns: 3fr 1fr 1fr;
     margin-top: 10px;
     align-items: center;
     justify-content: center;
     height: 20px;
-    margin: 25px 0 30px 0;
     align-items: center;
 }
 
@@ -173,7 +171,7 @@ body {
 .save-list-button {
     border-width: 0;
     margin: 5px;
-    padding: 5px 0px;
+    padding: 5px 5px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -224,7 +222,7 @@ body {
 
 .list-row {
     display: grid;
-    grid-template-columns: 200px 60px 60px;
+    grid-template-columns: 4fr 1fr 1fr;
     align-items: center;
     justify-content: center;
     height: 20px;
@@ -235,6 +233,7 @@ body {
 .edit-list-button {
     border-width: 0;
     height: 20px;
+    padding: 0px 5px;
     width: auto;
     margin: 5px;
     outline: none;
