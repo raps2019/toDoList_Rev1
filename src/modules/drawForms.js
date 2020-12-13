@@ -34,7 +34,7 @@ const drawEditListForm = (listArray,id) => {
 
     let input = document.createElement('input');
     let listName = listArray.find(list => list.id === id).name;
-    // input.placeholder = listName;
+    input.value = listName;
     input.id = 'editListInput';
     input.className = 'edit-list-input'
 
@@ -55,9 +55,76 @@ const drawEditListForm = (listArray,id) => {
     return div
 }
 
+const drawNewTaskForm = () => {
+    let form = document.createElement('form');
+    form.id = "newTaskFormContainer";
+    form.className = "new-list-form-container"
+
+    let nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.id = 'taskNameInput'
+    nameInput.className = 'task-name-input'
+    nameInput.placeholder = 'Task Name'
+
+    // let dateInputLabel = document.createElement('label');
+    // dateInputLabel.innerHTML = 'Set date'
+
+    let dateInput = document.createElement('input');
+    dateInput.type = 'text';
+    dateInput.placeholder = 'Date';
+    dateInput.setAttribute('onfocus',`(this.type='date')`)
+    dateInput.id = 'taskDateInput';
+    dateInput.className = 'task-date-input';
+
+    // let timeInputLabel = document.createElement('label');
+    // timeInputLabel = "Set time"
+
+    let timeInput = document.createElement('input');
+    timeInput.type = 'text';
+    timeInput.placeholder = 'Time';
+    timeInput.setAttribute('onfocus',`(this.type='time')`)
+    timeInput.id = 'taskTimeInput';
+    timeInput.className = 'task-time-input';
+
+    let colorSelector = document.createElement('select');
+    colorSelector.id = 'colorSelector';
+    colorSelector.className = 'color-selector'
+
+    let colorArray = ['#FFFFFF','#FF9AA2','#FFB7B2','#FFDAC1','#E2F0CB','#B5EAD7', '#C7CEEA']
+
+    for (let i = 0; i < colorArray.length; i++) {
+        let option = document.createElement('option');
+        option.value = colorArray[i];
+        option.id = `color-option-${colorArray[i]}`
+        option.className = 'color-option'
+        option.style.background = `${colorArray[i]}`;
+        colorSelector.appendChild(option);
+    }
+
+    let submitButton = document.createElement('button');
+    submitButton.id = 'submitTaskButton';
+    submitButton.className = 'submit-task-button';
+    submitButton.innerHTML = 'Add';
+
+    let cancelButton = document.createElement('button');
+    cancelButton.id = 'cancelTaskFormButton';
+    cancelButton.className = 'cancel-task-form-button';
+    cancelButton.innerHTML = 'Cancel';
+
+    form.appendChild(nameInput);
+    form.appendChild(dateInput);
+    form.appendChild(timeInput);
+    form.appendChild(colorSelector);
+    form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    return form;
+}
+
 export {
     drawNewListForm,
     drawEditListForm,
+    drawNewTaskForm,
 }
 
 //Draw Add New Task or Edit Task Form

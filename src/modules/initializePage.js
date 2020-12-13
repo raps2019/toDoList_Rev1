@@ -29,9 +29,9 @@ const initializePage = () => {
 
     let taskContentContainer = document.createElement('div');
     taskContentContainer.id = 'taskContentContainer';
-
-    taskContainer.appendChild(addTaskContainer);
+    
     taskContainer.appendChild(taskContentContainer);
+    taskContainer.appendChild(addTaskContainer);
 
     contentContainer.appendChild(listContainer);
     contentContainer.appendChild(taskContainer);

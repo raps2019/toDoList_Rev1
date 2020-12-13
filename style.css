@@ -295,7 +295,14 @@ body {
     cursor: pointer;
 }
 
+select.color-selector:focus {
+    outline: 1px;
+    border: solid black 1px;
+}
 
+option.color-option:hover {
+    background-color: white;
+}
 
 
 

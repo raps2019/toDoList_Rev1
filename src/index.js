@@ -5,10 +5,10 @@ import listFactory from './modules/listFactory'
 //Import DOM Manipulation Functions
 import { initializePage } from './modules/initializePage'
 import { drawNewListButton, drawNewTaskButton } from './modules/drawAddNewButtons';
-import { drawNewListForm, drawEditListForm } from './modules/drawForms';
+import { drawNewListForm, drawEditListForm, drawNewTaskForm } from './modules/drawForms';
 import { drawLists } from './modules/drawLists'
 
-console.log('This should work now!')
+console.log('This should work now!!!')
 
 const runApp = (() => {
 
@@ -82,6 +82,17 @@ const runApp = (() => {
         }
     })
 
+    //Submit new list when enter pressed
+    document.addEventListener('keyup', function(e) {
+        if(e.key != 'Enter') {
+            return;
+        } else {
+            if(document.getElementById('newListInput')) {
+                document.getElementById('submitListButton').click();
+            }
+        }
+    })
+
     //Change Active List by Clicking on List Row
     document.addEventListener('click',function(e) {
         if(e.target.classList.contains('inactive-list')) {
@@ -110,7 +121,7 @@ const runApp = (() => {
         }
     })
 
-    //Edit List when Edit Button Clicked
+    //Activate Edit List input form when Edit Button Clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'editListButton') {
             let listId = e.target.parentNode.dataset.listId;
@@ -122,15 +133,70 @@ const runApp = (() => {
             document.getElementById('editListInput').focus();
 
             // remove add new list button while edit list active
-            document.getElementById('newListButtonContainer').remove();
+            if (document.getElementById('newListButtonContainer')) {
+                document.getElementById('newListButtonContainer').remove();
+            }
         }
     })
 
-    document.addEventListener('click', function(e) {
-        console.log(e.target)
+    //Edit list name when save list button clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === 'saveListButton') {
+            let listId = e.target.parentNode.parentNode.dataset.listId;
+            console.log(listId);
+            let newListName = document.getElementById('editListInput').value;
+            if (newListName === '') {
+                alert('Enter a name of the list');
+            }
+            //Check if name is already used
+            let otherLists = listArray.filter(list => list.id != listId);
+            for (let i = 0; i < otherLists.length; i++) {
+                if (otherLists[i].name === newListName) {
+                    alert(`${newListName} already exists`);
+                    return;
+                }
+            }
+
+            listArray.find(list => list.id === listId).editName(newListName)
+            console.log(listArray);
+            listRowsContainer.remove();
+            listContentContainer.appendChild(drawLists(listArray));
+            addListContainer.appendChild(drawNewListButton());
+            return;
+        }
+    });
+
+    //Save input when enter button pressed
+    document.addEventListener('keyup', function(e) {
+        if(e.key != 'Enter') {
+            return;
+        } else {
+            if(document.getElementById('editListInput')) {
+                document.getElementById('saveListButton').click();
+            }
+        }
     })
 
+    //Open add new task form when Add new task clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === 'newTaskButton') {
+            let newTaskButtonContainer = document.getElementById('newTaskButtonContainer')
+            newTaskButtonContainer.remove();
+            addTaskContainer.appendChild(drawNewTaskForm());
+            //Remove edit and delete buttong for tasks while new task input active
+            // document.getElementById('editTaskButton').remove(); //To add
+            // document.getElementById('deleteTaskButton').remove(); //To add
+            // Focus on New Task Input 
+            document.getElementById('taskNameInput').focus();
+        }
+    })
 
+    //Change color option selector when color selected 
+    document.addEventListener('click', function(e) {
+        if (e.target.className = 'color-selector') {
+            document.getElementById('colorSelector').style.background = e.target.value;
+        }
+    })
     
 
 
