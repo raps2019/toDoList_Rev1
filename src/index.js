@@ -28,9 +28,12 @@ const runApp = (() => {
             let newListButtonContainer = document.getElementById('newListButtonContainer')
             newListButtonContainer.remove();
             addListContainer.appendChild(drawNewListForm());
-            //Remove edit and delete buttong for tasks while new list input active
-            document.getElementById('editListButton').remove();
-            document.getElementById('deleteListButton').remove();
+            //Remove edit and delete button for tasks while new list input active
+            //Check if edit and delete is active first
+            if (document.getElementById('editListButton')) {
+                document.getElementById('editListButton').remove();
+                document.getElementById('deleteListButton').remove();
+            }
             // Focus on New List Input 
             document.getElementById('newListInput').focus();
         }          
@@ -42,6 +45,9 @@ const runApp = (() => {
             let newListFormContainer = document.getElementById('newListFormContainer')
             newListFormContainer.remove();
             addListContainer.appendChild(drawNewListButton());
+            let listRowsContainer = document.getElementById('listRowsContainer');
+            listRowsContainer.remove();
+            listContentContainer.appendChild(drawLists(listArray));
         }
     })
 
@@ -50,6 +56,7 @@ const runApp = (() => {
 
     //Initialize List Array with Default List
     listArray.push(listFactory('Default',true));
+    let listContentContainer = document.getElementById('listContentContainer');
     listContentContainer.appendChild(drawLists(listArray))
 
     //Add List to Array when Submit List Button Clicked
@@ -108,7 +115,6 @@ const runApp = (() => {
             listRowsContainer.remove();
             listContentContainer.appendChild(drawLists(listArray));
         } 
-        
     })
 
     //Delete List when Delete Button Clicked
@@ -127,7 +133,7 @@ const runApp = (() => {
             let listId = e.target.parentNode.dataset.listId;
             let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
             targetListRow.innerHTML = ' ';
-            targetListRow.appendChild(drawEditListForm(listArray,listId));
+            drawEditListForm(listArray,listId,targetListRow);
             // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
             // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
             // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
@@ -145,7 +151,7 @@ const runApp = (() => {
     //Edit list name when save list button clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'saveListButton') {
-            let listId = e.target.parentNode.parentNode.dataset.listId;
+            let listId = e.target.parentNode.dataset.listId;
             console.log(listId);
             let newListName = document.getElementById('editListInput').value;
             if (newListName === '') {
@@ -185,13 +191,11 @@ const runApp = (() => {
     document.addEventListener('click', function(e) {
     if(e.target.id === 'cancelEditListFormButton') {
         
-        let editListFormContainer = document.getElementById('editListFormContainer')
-        editListFormContainer.remove();
-        addListContainer.appendChild(drawNewListButton());
         let listRowsContainer = document.getElementById('listRowsContainer')
         listRowsContainer.remove();
         listContentContainer.appendChild(drawLists(listArray));
-
+        //Add Add List Button Back
+        addListContainer.appendChild(drawNewListButton());
         }
     })
 

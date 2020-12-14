@@ -27,10 +27,7 @@ const drawNewListForm = () => {
 }
 
 //Draw Edit List Form
-const drawEditListForm = (listArray,id) => {
-    let div = document.createElement('div');
-    div.id = "editListFormContainer"
-    div.className = "edit-list-form-container"
+const drawEditListForm = (listArray,id,target) => {
 
     let input = document.createElement('input');
     let listName = listArray.find(list => list.id === id).name;
@@ -48,11 +45,9 @@ const drawEditListForm = (listArray,id) => {
     cancelButton.className = 'cancel-edit-list-form-button';
     cancelButton.innerHTML = 'Cancel';
     
-    div.appendChild(input);
-    div.appendChild(submitButton);
-    div.appendChild(cancelButton);
-
-    return div
+    target.appendChild(input);
+    target.appendChild(submitButton);
+    target.appendChild(cancelButton);
 }
 
 const drawNewTaskForm = () => {
