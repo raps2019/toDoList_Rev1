@@ -1,3 +1,6 @@
+
+
+
 button {
     border-width: 0;
     height: 20px;
@@ -17,6 +20,7 @@ button {
 body {
     margin: 0;
     padding: 0;
+    border: 0;
     font-family: 'Padauk', sans-serif;
 }
 
@@ -129,18 +133,6 @@ body {
     margin: 25px 0 30px 0;
 }
 
-.edit-list-form-container {
-    display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
-    margin-top: 10px;
-    align-items: center;
-    justify-content: center;
-    height: 20px;
-    align-items: center;
-}
-
-/* */
-
 .edit-list-input {
     border-top: none;
     border-left: none;
@@ -156,6 +148,7 @@ body {
 
 .save-list-button {
     background-color: #6dc091;
+    margin: 0 auto;
 }
 
 .save-list-button:hover {
@@ -172,6 +165,7 @@ body {
 
 .cancel-edit-list-form-button {
     background-color: #c75f5f;
+    margin: 0 auto;
 }
 
 .cancel-edit-list-form-button:hover {
@@ -193,13 +187,13 @@ body {
     grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
     justify-content: center;
-    height: 20px;
+    height: 30px;
     margin: 10px 0 10px 0;
-    align-items: center;
 }
 
 .edit-list-button {
     background-color: #6d87c0;
+    margin: 0 auto;
 }
 
 .edit-list-button:hover {
@@ -216,6 +210,7 @@ body {
 
 .delete-list-button {
     background-color: #c06d6d;
+    margin: 0 auto;
 }
 
 .delete-list-button:hover {

@@ -122,6 +122,7 @@ const runApp = (() => {
         if (e.target.id === 'deleteListButton') {
             let listId = e.target.parentNode.dataset.listId;
             listArray = listArray.filter(list => list.id != listId);
+            let listRowsContainer = document.getElementById('listRowsContainer');
             listRowsContainer.remove();
             listContentContainer.appendChild(drawLists(listArray));
         }
