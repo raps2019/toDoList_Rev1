@@ -58,7 +58,7 @@ const drawEditListForm = (listArray,id) => {
 const drawNewTaskForm = () => {
     let form = document.createElement('form');
     form.id = "newTaskFormContainer";
-    form.className = "new-list-form-container"
+    form.className = "new-task-form-container"
 
     let nameInput = document.createElement('input');
     nameInput.type = 'text';
@@ -86,6 +86,11 @@ const drawNewTaskForm = () => {
     timeInput.id = 'taskTimeInput';
     timeInput.className = 'task-time-input';
 
+    let selectColorLabel = document.createElement('label');
+    selectColorLabel.innerHTML = 'Select Color:';
+    selectColorLabel.className = 'select-color-label';
+    selectColorLabel.id = 'selectColorLabel'
+
     let colorSelector = document.createElement('select');
     colorSelector.id = 'colorSelector';
     colorSelector.className = 'color-selector'
@@ -101,6 +106,11 @@ const drawNewTaskForm = () => {
         colorSelector.appendChild(option);
     }
 
+    let detailsInput = document.createElement('textarea');
+    detailsInput.placeholder = "Details";
+    detailsInput.id = 'taskDetailsInput';
+    detailsInput.className = 'task-details-input';
+
     let submitButton = document.createElement('button');
     submitButton.id = 'submitTaskButton';
     submitButton.className = 'submit-task-button';
@@ -114,7 +124,9 @@ const drawNewTaskForm = () => {
     form.appendChild(nameInput);
     form.appendChild(dateInput);
     form.appendChild(timeInput);
+    form.appendChild(selectColorLabel);
     form.appendChild(colorSelector);
+    form.appendChild(detailsInput);
     form.appendChild(submitButton);
     form.appendChild(cancelButton);
 

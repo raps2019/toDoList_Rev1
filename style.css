@@ -1,3 +1,19 @@
+button {
+    border-width: 0;
+    height: 20px;
+    padding: 0 15px;
+    margin: 10px;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    background-color: black;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -25,15 +41,8 @@ body {
 }
 
 .new-list-button {
-    border-width: 0;
-    padding: 5px 10px;
-    margin-top: 15px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #7c8bff;
-    color: #ecf0f1;
-    transition: box-shadow background-color .2s;
+    margin-left: 0px;
 }
 
 .new-list-button:hover {
@@ -49,14 +58,8 @@ body {
 }
 
 .new-task-button {
-    border-width: 0;
-    padding: 5px 20px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #679a7d;
-    color: #ecf0f1;
-    transition: background-color .3s;
+
 }
 
 .new-task-button:hover {
@@ -85,17 +88,7 @@ body {
 }
 
 .submit-list-button {
-    border-width: 0;
-    margin: 5px;
-    padding: 5px 5px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #6dc091;
-    color: #ecf0f1;
-    transition: background-color .3s;
-    align-items: center;
-    text-align: center;
 }
 
 .submit-list-button:hover {
@@ -111,15 +104,8 @@ body {
 }
 
 .cancel-list-form-button {
-    border-width: 0;
-    margin: 5px;
-    padding: 5px 5px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #c75f5f;
     color: #ecf0f1;
-    transition: background-color .3s;
 }
 
 .cancel-list-form-button:hover {
@@ -145,7 +131,7 @@ body {
 
 .edit-list-form-container {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr;
     margin-top: 10px;
     align-items: center;
     justify-content: center;
@@ -169,17 +155,7 @@ body {
 }
 
 .save-list-button {
-    border-width: 0;
-    margin: 5px;
-    padding: 5px 5px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #6dc091;
-    color: #ecf0f1;
-    transition: background-color .3s;
-    align-items: center;
-    text-align: center;
 }
 
 .save-list-button:hover {
@@ -195,15 +171,7 @@ body {
 }
 
 .cancel-edit-list-form-button {
-    border-width: 0;
-    margin: 5px;
-    padding: 5px 0px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #c75f5f;
-    color: #ecf0f1;
-    transition: background-color .3s;
 }
 
 .cancel-edit-list-form-button:hover {
@@ -222,7 +190,7 @@ body {
 
 .list-row {
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
     justify-content: center;
     height: 20px;
@@ -231,17 +199,7 @@ body {
 }
 
 .edit-list-button {
-    border-width: 0;
-    height: 20px;
-    padding: 0px 5px;
-    width: auto;
-    margin: 5px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #6d87c0;
-    color: #ecf0f1;
-    transition: background-color .3s;
 }
 
 .edit-list-button:hover {
@@ -257,16 +215,7 @@ body {
 }
 
 .delete-list-button {
-    border-width: 0;
-    height: 20px;
-    width: auto;
-    margin: 5px;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
     background-color: #c06d6d;
-    color: #ecf0f1;
-    transition: background-color .3s;
 }
 
 .delete-list-button:hover {
@@ -304,9 +253,65 @@ option.color-option:hover {
     background-color: white;
 }
 
+.new-task-form-container {
+    display: grid;
+    grid-template-areas:
+    'name name name name name date date'
+    'details details details details details time time'
+    'details details details details details label selector'
+    'details details details details details submit cancel'
+}
+
+.task-name-input {
+    margin: 5px;
+    grid-area: name;
+    border-width: 0 0 1px 0;
+}
 
 
 
+.task-date-input {
+    margin: 5px;
+    grid-area: date;
+    border-width: 0 0 1px 0;
+}
+
+.task-time-input {
+    margin: 5px;
+    grid-area: time;
+    border-width: 0 0 1px 0;
+}
+
+.select-color-label {
+    margin: 5px;
+    grid-area: label;
+    justify-content: right;
+    text-align: center;
+}
+
+.color-selector {
+    margin: 5px;
+    grid-area: selector;
+    border-width: 0 0 1px 0;
+}
+
+.task-details-input{
+    margin: 5px;
+    grid-area: details;
+}
+
+.submit-task-button {
+    grid-area: submit;
+    width: 85%;
+    margin: auto;
+    
+}
+
+.cancel-task-form-button {
+    grid-area: cancel;
+    width: 85%;
+    margin: auto;
+}
 
 /* 
 

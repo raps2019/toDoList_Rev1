@@ -128,6 +128,9 @@ const runApp = (() => {
             let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
             targetListRow.innerHTML = ' ';
             targetListRow.appendChild(drawEditListForm(listArray,listId));
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
             
             // focus on input field
             document.getElementById('editListInput').focus();
@@ -159,6 +162,7 @@ const runApp = (() => {
 
             listArray.find(list => list.id === listId).editName(newListName)
             console.log(listArray);
+            let listRowsContainer = document.getElementById('listRowsContainer')
             listRowsContainer.remove();
             listContentContainer.appendChild(drawLists(listArray));
             addListContainer.appendChild(drawNewListButton());
@@ -177,6 +181,22 @@ const runApp = (() => {
         }
     })
 
+    //Deactivate Edit List form when cancel button Clicked and Edit New List Button Back
+    document.addEventListener('click', function(e) {
+    if(e.target.id === 'cancelEditListFormButton') {
+        
+        let editListFormContainer = document.getElementById('editListFormContainer')
+        editListFormContainer.remove();
+        addListContainer.appendChild(drawNewListButton());
+        let listRowsContainer = document.getElementById('listRowsContainer')
+        listRowsContainer.remove();
+        listContentContainer.appendChild(drawLists(listArray));
+
+        }
+    })
+
+
+
     //Open add new task form when Add new task clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'newTaskButton') {
@@ -193,7 +213,7 @@ const runApp = (() => {
 
     //Change color option selector when color selected 
     document.addEventListener('click', function(e) {
-        if (e.target.className = 'color-selector') {
+        if (e.target.id === 'colorSelector') {
             document.getElementById('colorSelector').style.background = e.target.value;
         }
     })

@@ -145,6 +145,9 @@ const runApp = (() => {
             let targetListRow = document.querySelector(`[data-list-id = '${listId}']`);
             targetListRow.innerHTML = ' ';
             targetListRow.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawEditListForm)(listArray,listId));
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
+            // targetListRow.appendChild(drawEditListForm(listArray,listId).children[0]);
             
             // focus on input field
             document.getElementById('editListInput').focus();
@@ -176,6 +179,7 @@ const runApp = (() => {
 
             listArray.find(list => list.id === listId).editName(newListName)
             console.log(listArray);
+            let listRowsContainer = document.getElementById('listRowsContainer')
             listRowsContainer.remove();
             listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
             addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
@@ -194,6 +198,22 @@ const runApp = (() => {
         }
     })
 
+    //Deactivate Edit List form when cancel button Clicked and Edit New List Button Back
+    document.addEventListener('click', function(e) {
+    if(e.target.id === 'cancelEditListFormButton') {
+        
+        let editListFormContainer = document.getElementById('editListFormContainer')
+        editListFormContainer.remove();
+        addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
+        let listRowsContainer = document.getElementById('listRowsContainer')
+        listRowsContainer.remove();
+        listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+
+        }
+    })
+
+
+
     //Open add new task form when Add new task clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'newTaskButton') {
@@ -210,7 +230,7 @@ const runApp = (() => {
 
     //Change color option selector when color selected 
     document.addEventListener('click', function(e) {
-        if (e.target.className = 'color-selector') {
+        if (e.target.id === 'colorSelector') {
             document.getElementById('colorSelector').style.background = e.target.value;
         }
     })
@@ -347,7 +367,7 @@ const drawEditListForm = (listArray,id) => {
 const drawNewTaskForm = () => {
     let form = document.createElement('form');
     form.id = "newTaskFormContainer";
-    form.className = "new-list-form-container"
+    form.className = "new-task-form-container"
 
     let nameInput = document.createElement('input');
     nameInput.type = 'text';
@@ -375,6 +395,11 @@ const drawNewTaskForm = () => {
     timeInput.id = 'taskTimeInput';
     timeInput.className = 'task-time-input';
 
+    let selectColorLabel = document.createElement('label');
+    selectColorLabel.innerHTML = 'Select Color:';
+    selectColorLabel.className = 'select-color-label';
+    selectColorLabel.id = 'selectColorLabel'
+
     let colorSelector = document.createElement('select');
     colorSelector.id = 'colorSelector';
     colorSelector.className = 'color-selector'
@@ -390,6 +415,11 @@ const drawNewTaskForm = () => {
         colorSelector.appendChild(option);
     }
 
+    let detailsInput = document.createElement('textarea');
+    detailsInput.placeholder = "Details";
+    detailsInput.id = 'taskDetailsInput';
+    detailsInput.className = 'task-details-input';
+
     let submitButton = document.createElement('button');
     submitButton.id = 'submitTaskButton';
     submitButton.className = 'submit-task-button';
@@ -403,7 +433,9 @@ const drawNewTaskForm = () => {
     form.appendChild(nameInput);
     form.appendChild(dateInput);
     form.appendChild(timeInput);
+    form.appendChild(selectColorLabel);
     form.appendChild(colorSelector);
+    form.appendChild(detailsInput);
     form.appendChild(submitButton);
     form.appendChild(cancelButton);
 
