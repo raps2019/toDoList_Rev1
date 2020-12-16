@@ -15,11 +15,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/drawAddNewButtons */ "./src/modules/drawAddNewButtons.js");
 /* harmony import */ var _modules_drawForms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/drawForms */ "./src/modules/drawForms.js");
 /* harmony import */ var _modules_drawLists__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/drawLists */ "./src/modules/drawLists.js");
+/* harmony import */ var _modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/drawTasks */ "./src/modules/drawTasks.js");
 //Import Factory Functions
 
 
 
 //Import DOM Manipulation Functions
+
 
 
 
@@ -100,9 +102,16 @@ const runApp = (() => {
             listInput.value = '';
             document.getElementById('listRowsContainer').remove();
             listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+
+            //Remove add form and draw add new list button
             let newListFormContainer = document.getElementById('newListFormContainer')
             newListFormContainer.remove();
             addListContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewListButton)());
+
+            //Draw Tasks for Active List
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
         }
     })
 
@@ -131,6 +140,10 @@ const runApp = (() => {
             let listRowsContainer = document.getElementById('listRowsContainer');
             listRowsContainer.remove();
             listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
         } 
     })
 
@@ -139,6 +152,13 @@ const runApp = (() => {
         if (e.target.id === 'deleteListButton') {
             let listId = e.target.parentNode.dataset.listId;
             listArray = listArray.filter(list => list.id != listId);
+
+            //Set last list as active
+            if (listArray.length != 0) {
+                listArray[listArray.length -1].active = true;
+            }
+
+            let listRowsContainer = document.getElementById('listRowsContainer');
             listRowsContainer.remove();
             listContentContainer.appendChild((0,_modules_drawLists__WEBPACK_IMPORTED_MODULE_5__.drawLists)(listArray));
         }
@@ -232,10 +252,44 @@ const runApp = (() => {
         }
     })
 
-    //Change color option selector when color selected 
+    //Change task color option selector when color selected 
     document.addEventListener('click', function(e) {
         if (e.target.id === 'colorSelector') {
             document.getElementById('colorSelector').style.background = e.target.value;
+        }
+    })
+
+    //Save task to task array when submit task button clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === ('submitTaskButton')) {
+            e.preventDefault();
+            //Set other tasks to inactive
+            taskArray.map(task => task.active = false);
+
+            //Arguments for taskFactory Function
+            let name = document.getElementById('taskNameInput').value;
+            let details = document.getElementById('taskDetailsInput').value;
+            let date = document.getElementById('taskDateInput').value;
+            let time = document.getElementById('taskTimeInput').value;
+            let color = document.getElementById('colorSelector').value
+            let list = listArray.find(list => list.active === true).name;
+            let active = true;
+
+            //Add task to taskArray
+            taskArray.push((0,_modules_taskFactory__WEBPACK_IMPORTED_MODULE_0__.default)(name,details,date,time,color,list,active));
+            console.log(taskArray);
+            console.log(listArray)
+
+            //Draw Tasks for Active List
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+
+            //Remove new task form and draw add new task button
+            let addTaskContainer = document.getElementById('addTaskContainer');
+            addTaskContainer.innerHTML = '';
+
+            addTaskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewTaskButton)());
         }
     })
     
@@ -502,6 +556,92 @@ const drawLists = (listArray) => {
 
 /***/ }),
 
+/***/ "./src/modules/drawTasks.js":
+/*!**********************************!*
+  !*** ./src/modules/drawTasks.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "drawTasks": () => /* binding */ drawTasks
+/* harmony export */ });
+const drawTasks = (taskArray,listArray) => {
+    let div = document.createElement('div');
+    div.id = "taskRowsContainer";
+    div.className = 'task-rows-container';
+
+    let activeListName = listArray.find(list => list.active === true).name;
+    console.log(activeListName)
+
+    //Filter the task Array to only include active list tasks
+
+    let activeListTaskArray = taskArray.filter(task => task.list === activeListName);
+
+
+    for (let i = 0; i < activeListTaskArray.length; i++) {
+
+        let taskRow = document.createElement('div');
+        taskRow.dataset.taskId = activeListTaskArray[i].id; 
+        taskRow.className = 'task-row';
+        taskRow.style.background = activeListTaskArray[i].color;
+
+        let completedCheckBox = document.createElement('input');
+        completedCheckBox.type = 'checkbox';
+        completedCheckBox.className = 'completed-check-box';
+        completedCheckBox.id = 'completedCheckBox'
+
+        let nameP = document.createElement('p');
+        nameP.innerHTML = activeListTaskArray[i].name;
+        nameP.className = 'task-name'
+
+        let dateP = document.createElement('p');
+        dateP.innerHTML = activeListTaskArray[i].date;
+        dateP.className = 'task-date';
+
+        let timeP = document.createElement('p');
+        timeP.innerHTML = activeListTaskArray[i].time;
+        timeP.className = 'task-time'
+
+        taskRow.appendChild(completedCheckBox);
+        taskRow.appendChild(nameP);
+        taskRow.appendChild(dateP);
+        taskRow.appendChild(timeP);
+
+        if (activeListTaskArray[i].active === true) {
+            taskRow.className = 'task-row-active'
+
+            let detailsP = document.createElement('p');
+            detailsP.innerHTML = activeListTaskArray[i].details;
+            detailsP.className = 'task-details'
+
+
+            let editButton= document.createElement('button');
+            editButton.className = 'edit-task-button';
+            editButton.id = 'editTaskButton';
+            editButton.innerHTML = 'Edit'
+
+            let deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-task-button';
+            deleteButton.id = 'deleteTaskButton';
+            deleteButton.innerHTML = 'Delete'
+
+            taskRow.appendChild(detailsP)
+            taskRow.appendChild(editButton);
+            taskRow.appendChild(deleteButton);
+        }
+        
+        div.appendChild(taskRow);
+    }
+
+    return div;
+}
+
+
+
+
+/***/ }),
+
 /***/ "./src/modules/initializePage.js":
 /*!***************************************!*
   !*** ./src/modules/initializePage.js ***!
@@ -616,8 +756,8 @@ const taskProto = {
     editDueDate(newDueDate) {
         this.dueDate = newDueDate;
     },
-    editPriority(newPriority) {
-        this.priority = newPriority;
+    editColor(newColor) {
+        this.color = newColor;
     },
     editList(newList) {
         this.list = newList;
@@ -632,15 +772,16 @@ const taskProto = {
 }
 
 //Task Factory Function
-const taskFactory = (name,details,dueDate,priority,list,active) => {
+const taskFactory = (name,details,date,time,color,list,active) => {
 
     let task = Object.create(taskProto);
     let completed = false;  
 
     task.name = name;
     task.details = details;
-    task.dueDate = dueDate;
-    task.priority = priority;
+    task.date = date;
+    task.time = time;
+    task.color = color;
     task.list = list;
     task.active = active;
     task.completed = completed;
@@ -650,8 +791,8 @@ const taskFactory = (name,details,dueDate,priority,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,name,details,dueDate,priority,list) => {
-//     taskList.push(taskFactory(name,details,dueDate,priority,list));
+// const addTask = (taskList,name,details,dueDate,color,list) => {
+//     taskList.push(taskFactory(name,details,dueDate,color,list));
 // }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskFactory);

@@ -7,6 +7,7 @@ import { initializePage } from './modules/initializePage'
 import { drawNewListButton, drawNewTaskButton } from './modules/drawAddNewButtons';
 import { drawNewListForm, drawEditListForm, drawNewTaskForm } from './modules/drawForms';
 import { drawLists } from './modules/drawLists'
+import { drawTasks } from './modules/drawTasks'
 
 console.log('This should work now!!!')
 
@@ -83,9 +84,16 @@ const runApp = (() => {
             listInput.value = '';
             document.getElementById('listRowsContainer').remove();
             listContentContainer.appendChild(drawLists(listArray));
+
+            //Remove add form and draw add new list button
             let newListFormContainer = document.getElementById('newListFormContainer')
             newListFormContainer.remove();
             addListContainer.appendChild(drawNewListButton());
+
+            //Draw Tasks for Active List
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
         }
     })
 
@@ -114,6 +122,10 @@ const runApp = (() => {
             let listRowsContainer = document.getElementById('listRowsContainer');
             listRowsContainer.remove();
             listContentContainer.appendChild(drawLists(listArray));
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
         } 
     })
 
@@ -122,6 +134,12 @@ const runApp = (() => {
         if (e.target.id === 'deleteListButton') {
             let listId = e.target.parentNode.dataset.listId;
             listArray = listArray.filter(list => list.id != listId);
+
+            //Set last list as active
+            if (listArray.length != 0) {
+                listArray[listArray.length -1].active = true;
+            }
+
             let listRowsContainer = document.getElementById('listRowsContainer');
             listRowsContainer.remove();
             listContentContainer.appendChild(drawLists(listArray));
@@ -216,10 +234,44 @@ const runApp = (() => {
         }
     })
 
-    //Change color option selector when color selected 
+    //Change task color option selector when color selected 
     document.addEventListener('click', function(e) {
         if (e.target.id === 'colorSelector') {
             document.getElementById('colorSelector').style.background = e.target.value;
+        }
+    })
+
+    //Save task to task array when submit task button clicked
+    document.addEventListener('click',function(e) {
+        if (e.target.id === ('submitTaskButton')) {
+            e.preventDefault();
+            //Set other tasks to inactive
+            taskArray.map(task => task.active = false);
+
+            //Arguments for taskFactory Function
+            let name = document.getElementById('taskNameInput').value;
+            let details = document.getElementById('taskDetailsInput').value;
+            let date = document.getElementById('taskDateInput').value;
+            let time = document.getElementById('taskTimeInput').value;
+            let color = document.getElementById('colorSelector').value
+            let list = listArray.find(list => list.active === true).name;
+            let active = true;
+
+            //Add task to taskArray
+            taskArray.push(taskFactory(name,details,date,time,color,list,active));
+            console.log(taskArray);
+            console.log(listArray)
+
+            //Draw Tasks for Active List
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+
+            //Remove new task form and draw add new task button
+            let addTaskContainer = document.getElementById('addTaskContainer');
+            addTaskContainer.innerHTML = '';
+
+            addTaskContainer.appendChild(drawNewTaskButton());
         }
     })
     

@@ -91,36 +91,44 @@ body {
     outline: none;
 }
 
-.submit-list-button {
+.submit-list-button,
+.submit-task-button {
     background-color: #6dc091;
 }
 
-.submit-list-button:hover {
+.submit-list-button:hover,
+.submit-task-button:hover {
     background-color: #6ed37f;
 }
 
-.submit-list-button:focus {
+.submit-list-button:focus,
+.submit-task-button:focus {
     box-shadow: 0 1px 4px rgba(0,0,0,.8);
 }
 
-.submit-list-button:active {
+.submit-list-button:active,
+.submit-task-button:active {
     background-color: #888888;
 }
 
-.cancel-list-form-button {
+.cancel-list-form-button,
+.cancel-task-form-button {
     background-color: #c75f5f;
     color: #ecf0f1;
 }
 
-.cancel-list-form-button:hover {
+.cancel-list-form-button:hover,
+.cancel-task-form-button:hover  {
     background-color: #eb5757;
 }
 
-.cancel-list-form-button:focus {
+.cancel-list-form-button:focus,
+.cancel-task-form-button:focus {
     box-shadow: 0 1px 4px rgba(0,0,0,.8);
 }
 
-.cancel-list-form-button:active {
+.cancel-list-form-button:active,
+.cancel-task-form-button:active {
     background-color: #888888;
 }
 
@@ -191,37 +199,45 @@ body {
     margin: 10px 0 10px 0;
 }
 
-.edit-list-button {
+.edit-list-button,
+.edit-task-button {
     background-color: #6d87c0;
     margin: 0 auto;
 }
 
-.edit-list-button:hover {
+.edit-list-button:hover,
+.edit-task-button:hover  {
     background-color: #5c82ff;
 }
 
-.edit-list-button:focus {
+.edit-list-button:focus,
+.edit-task-button:focus {
     box-shadow: 0 1px 4px rgba(0,0,0,.8);
 }
 
-.edit-list-button:active {
+.edit-list-button:active,
+.edit-task-button:active {
     background-color: #888888;
 }
 
-.delete-list-button {
+.delete-list-button,
+.delete-task-button {
     background-color: #c06d6d;
     margin: 0 auto;
 }
 
-.delete-list-button:hover {
+.delete-list-button:hover,
+.delete-task-button:hover {
     background-color: #ff5c5c;
 }
 
-.delete-list-button:focus {
+.delete-list-button:focus,
+.delete-task-button:focus {
     box-shadow: 0 1px 4px rgba(0,0,0,.8);
 }
 
-.delete-list-button:active {
+.delete-list-button:active,
+.delete-task-button:active {
     background-color: #888888;
 }
 
@@ -254,7 +270,7 @@ option.color-option:hover {
     'name name name name name date date'
     'details details details details details time time'
     'details details details details details label selector'
-    'details details details details details submit cancel'
+    'details details details details details submit cancel';
 }
 
 .task-name-input {
@@ -307,6 +323,52 @@ option.color-option:hover {
     width: 85%;
     margin: auto;
 }
+
+.task-row {
+    display: grid;
+    grid-template-areas: 'check tName tName tName tName tDate tTime';
+    height: auto;
+}
+
+.task-row-active {
+    display: grid;
+    grid-template-areas: 
+    'check tName tName tName tName tDate tTime'
+    'tDetails tDetails tDetails tDetails tDetails tEdit tDelete';
+    height: auto;
+}
+
+.completed-check-box {
+    grid-area: check;
+}
+
+.task-name {
+    grid-area: tName;
+}
+
+.task-date {
+    grid-area: tDate;
+}
+
+.task-time {
+    grid-area: tTime;
+}
+
+.task-details {
+    grid-area: tDetails;
+}
+
+.edit-task-button {
+    grid-area: tEdit;
+    margin: auto;
+}
+
+.delete-task-button {
+    grid-area: tDelete;
+    margin: auto;
+}
+
+
 
 /* 
 

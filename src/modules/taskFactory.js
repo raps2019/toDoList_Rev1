@@ -11,8 +11,8 @@ const taskProto = {
     editDueDate(newDueDate) {
         this.dueDate = newDueDate;
     },
-    editPriority(newPriority) {
-        this.priority = newPriority;
+    editColor(newColor) {
+        this.color = newColor;
     },
     editList(newList) {
         this.list = newList;
@@ -27,15 +27,16 @@ const taskProto = {
 }
 
 //Task Factory Function
-const taskFactory = (name,details,dueDate,priority,list,active) => {
+const taskFactory = (name,details,date,time,color,list,active) => {
 
     let task = Object.create(taskProto);
     let completed = false;  
 
     task.name = name;
     task.details = details;
-    task.dueDate = dueDate;
-    task.priority = priority;
+    task.date = date;
+    task.time = time;
+    task.color = color;
     task.list = list;
     task.active = active;
     task.completed = completed;
@@ -45,8 +46,8 @@ const taskFactory = (name,details,dueDate,priority,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,name,details,dueDate,priority,list) => {
-//     taskList.push(taskFactory(name,details,dueDate,priority,list));
+// const addTask = (taskList,name,details,dueDate,color,list) => {
+//     taskList.push(taskFactory(name,details,dueDate,color,list));
 // }
 
 export default taskFactory;
