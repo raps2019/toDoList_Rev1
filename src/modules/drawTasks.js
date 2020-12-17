@@ -3,6 +3,34 @@ const drawTasks = (taskArray,listArray) => {
     div.id = "taskRowsContainer";
     div.className = 'task-rows-container';
 
+    //Draw Task Headers
+    let taskRowHeader = document.createElement('div');
+    taskRowHeader.id = 'taskRowHeader';
+    taskRowHeader.className = 'task-row-header';
+
+    let checkBoxHeader = document.createElement('h3');
+    checkBoxHeader.innerHTML = 'Done';
+    checkBoxHeader.className = 'completed-check-box-header'
+
+    let nameHeader = document.createElement('h3');
+    nameHeader.innerHTML = 'Task';
+    nameHeader.className = 'task-name-header'
+
+    let dateHeader = document.createElement('h3');
+    dateHeader.innerHTML = 'Due Date';
+    dateHeader.className = 'task-date-header'
+
+    let timeHeader = document.createElement('h3');
+    timeHeader.innerHTML = 'Time';
+    timeHeader.className = 'task-time-header'
+
+    taskRowHeader.appendChild(checkBoxHeader);
+    taskRowHeader.appendChild(nameHeader);
+    taskRowHeader.appendChild(dateHeader);
+    taskRowHeader.appendChild(timeHeader);
+
+    div.appendChild(taskRowHeader);
+
     let activeListName = listArray.find(list => list.active === true).name;
     console.log(activeListName)
 

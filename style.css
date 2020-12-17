@@ -324,48 +324,78 @@ option.color-option:hover {
     margin: auto;
 }
 
+.task-row-header {
+    display: grid;
+    grid-template-columns: repeat(50, 1fr);
+    grid-template-rows: 25px; 
+    align-items: center;
+    margin: 10px;
+}
+
 .task-row {
     display: grid;
-    grid-template-areas: 'check tName tName tName tName tDate tTime';
-    height: auto;
+    grid-template-columns: repeat(50, 1fr);
+    grid-template-rows: 25px; 
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+    border-radius: 10px;
+    padding: 5px 0;
+    margin: 10px;
+    color: rgb(157, 157, 157);
+}
+
+.task-row:hover {
+    color: black;
+    cursor: pointer;
 }
 
 .task-row-active {
     display: grid;
-    grid-template-areas: 
-    'check tName tName tName tName tDate tTime'
-    'tDetails tDetails tDetails tDetails tDetails tEdit tDelete';
-    height: auto;
+    grid-template-columns: repeat(50, 1fr);
+    grid-template-rows: 25px; 
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,.8);
+    border-radius: 10px;
+    padding: 10px 0 0 0;
+    margin: 10px;
 }
 
-.completed-check-box {
-    grid-area: check;
+.completed-check-box,
+.completed-check-box-header {
+    grid-column: 1/7;
+    margin: 0 auto 0 auto;
 }
 
-.task-name {
-    grid-area: tName;
+.task-name,
+.task-name-header {
+    grid-column: 7/30;
+    text-align: left;
+    
 }
 
-.task-date {
-    grid-area: tDate;
+.task-date,
+.task-date-header {
+    grid-column: 30/40;
+    text-align: center;
 }
 
-.task-time {
-    grid-area: tTime;
+.task-time,
+.task-time-header {
+    grid-column: 40/50;
+    text-align: center;
 }
 
 .task-details {
-    grid-area: tDetails;
+    grid-column: 7/30;
+    font-style: italic;
 }
 
 .edit-task-button {
-    grid-area: tEdit;
-    margin: auto;
+    grid-column: 30/40;
 }
 
 .delete-task-button {
-    grid-area: tDelete;
-    margin: auto;
+    grid-column: 40/50;
 }
 
 

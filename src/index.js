@@ -9,7 +9,7 @@ import { drawNewListForm, drawEditListForm, drawNewTaskForm } from './modules/dr
 import { drawLists } from './modules/drawLists'
 import { drawTasks } from './modules/drawTasks'
 
-console.log('This should work now!!!')
+console.log('This should work now')
 
 const runApp = (() => {
 
@@ -225,11 +225,14 @@ const runApp = (() => {
         if (e.target.id === 'newTaskButton') {
             let newTaskButtonContainer = document.getElementById('newTaskButtonContainer')
             newTaskButtonContainer.remove();
+
+            taskArray.map(task => task.active = false);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+
             addTaskContainer.appendChild(drawNewTaskForm());
-            //Remove edit and delete buttong for tasks while new task input active
-            // document.getElementById('editTaskButton').remove(); //To add
-            // document.getElementById('deleteTaskButton').remove(); //To add
-            // Focus on New Task Input 
             document.getElementById('taskNameInput').focus();
         }
     })
@@ -257,6 +260,28 @@ const runApp = (() => {
             let list = listArray.find(list => list.active === true).name;
             let active = true;
 
+            if (name === '') {
+                alert('Enter a task name');
+                return;
+            }
+
+            if (details === '') {
+                details = 'No additional details'
+            }
+
+            if (date === '') {
+                date = '-';
+            }
+
+            if (time === '') {
+                time = '-';
+            }
+
+            if (time != '-' && date === '-') {
+                alert('Enter a due date');
+                return;
+            }
+
             //Add task to taskArray
             taskArray.push(taskFactory(name,details,date,time,color,list,active));
             console.log(taskArray);
@@ -275,9 +300,37 @@ const runApp = (() => {
         }
     })
     
+    //Change active task when task row is clicked
+    document.addEventListener('click' , function(e) {
+        if (e.target.className === 'task-row' || e.target.parentNode.className === 'task-row') {
+            let id;
+            if (e.target.className === 'task-row') {
+                id = e.target.dataset.taskId;
+            } else {
+                id = e.target.parentNode.dataset.taskId;
+            }
 
+            //Make all tasks inactive, then set clicked task to active
+            taskArray.map(task => task.active = false);
+            taskArray.find(task => task.id === id).active = true;
 
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+        }
+    })
 
+    //Delete task when delete button is clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'deleteTaskButton') {
+            let id = e.target.parentNode.dataset.taskId;
+            taskArray = taskArray.filter(task => task.id != id);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+        }
+    })
 
 
 

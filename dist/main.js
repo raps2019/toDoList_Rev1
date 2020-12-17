@@ -27,7 +27,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log('This should work now!!!')
+console.log('This should work now')
 
 const runApp = (() => {
 
@@ -243,11 +243,14 @@ const runApp = (() => {
         if (e.target.id === 'newTaskButton') {
             let newTaskButtonContainer = document.getElementById('newTaskButtonContainer')
             newTaskButtonContainer.remove();
+
+            taskArray.map(task => task.active = false);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+
             addTaskContainer.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawNewTaskForm)());
-            //Remove edit and delete buttong for tasks while new task input active
-            // document.getElementById('editTaskButton').remove(); //To add
-            // document.getElementById('deleteTaskButton').remove(); //To add
-            // Focus on New Task Input 
             document.getElementById('taskNameInput').focus();
         }
     })
@@ -275,6 +278,28 @@ const runApp = (() => {
             let list = listArray.find(list => list.active === true).name;
             let active = true;
 
+            if (name === '') {
+                alert('Enter a task name');
+                return;
+            }
+
+            if (details === '') {
+                details = 'No additional details'
+            }
+
+            if (date === '') {
+                date = '-';
+            }
+
+            if (time === '') {
+                time = '-';
+            }
+
+            if (time != '-' && date === '-') {
+                alert('Enter a due date');
+                return;
+            }
+
             //Add task to taskArray
             taskArray.push((0,_modules_taskFactory__WEBPACK_IMPORTED_MODULE_0__.default)(name,details,date,time,color,list,active));
             console.log(taskArray);
@@ -293,9 +318,37 @@ const runApp = (() => {
         }
     })
     
+    //Change active task when task row is clicked
+    document.addEventListener('click' , function(e) {
+        if (e.target.className === 'task-row' || e.target.parentNode.className === 'task-row') {
+            let id;
+            if (e.target.className === 'task-row') {
+                id = e.target.dataset.taskId;
+            } else {
+                id = e.target.parentNode.dataset.taskId;
+            }
 
+            //Make all tasks inactive, then set clicked task to active
+            taskArray.map(task => task.active = false);
+            taskArray.find(task => task.id === id).active = true;
 
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+        }
+    })
 
+    //Delete task when delete button is clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'deleteTaskButton') {
+            let id = e.target.parentNode.dataset.taskId;
+            taskArray = taskArray.filter(task => task.id != id);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+        }
+    })
 
 
 
@@ -570,6 +623,34 @@ const drawTasks = (taskArray,listArray) => {
     let div = document.createElement('div');
     div.id = "taskRowsContainer";
     div.className = 'task-rows-container';
+
+    //Draw Task Headers
+    let taskRowHeader = document.createElement('div');
+    taskRowHeader.id = 'taskRowHeader';
+    taskRowHeader.className = 'task-row-header';
+
+    let checkBoxHeader = document.createElement('h3');
+    checkBoxHeader.innerHTML = 'Done';
+    checkBoxHeader.className = 'completed-check-box-header'
+
+    let nameHeader = document.createElement('h3');
+    nameHeader.innerHTML = 'Task';
+    nameHeader.className = 'task-name-header'
+
+    let dateHeader = document.createElement('h3');
+    dateHeader.innerHTML = 'Due Date';
+    dateHeader.className = 'task-date-header'
+
+    let timeHeader = document.createElement('h3');
+    timeHeader.innerHTML = 'Time';
+    timeHeader.className = 'task-time-header'
+
+    taskRowHeader.appendChild(checkBoxHeader);
+    taskRowHeader.appendChild(nameHeader);
+    taskRowHeader.appendChild(dateHeader);
+    taskRowHeader.appendChild(timeHeader);
+
+    div.appendChild(taskRowHeader);
 
     let activeListName = listArray.find(list => list.active === true).name;
     console.log(activeListName)
