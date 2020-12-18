@@ -27,7 +27,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log('This should work now')
+console.log('This should work now!!!')
 
 const runApp = (() => {
 
@@ -241,8 +241,7 @@ const runApp = (() => {
     //Open add new task form when Add new task clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'newTaskButton') {
-            let newTaskButtonContainer = document.getElementById('newTaskButtonContainer')
-            newTaskButtonContainer.remove();
+            addTaskContainer.innerHTML = '';
 
             taskArray.map(task => task.active = false);
 
@@ -350,7 +349,93 @@ const runApp = (() => {
         }
     })
 
+    //Edit Task When Edit Clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'editTaskButton') {
 
+            let activeTasks = taskArray.filter(task => task.active === true);
+            if (activeTasks.length <= 1) {
+                document.getElementById('taskRowHeader').remove();
+            }
+
+            let id = e.target.parentNode.dataset.taskId;
+            let taskRow = document.querySelector(`[data-task-id ='${id}']`);
+            taskRow.className = 'edit-task-row-container';
+            taskRow.innerHTML = '';
+
+            document.getElementById('newTaskButton').remove();
+
+            taskRow.appendChild((0,_modules_drawForms__WEBPACK_IMPORTED_MODULE_4__.drawEditTaskForm)(taskArray,id));
+        }
+    });
+
+    //Remove edit task form when cancel edit task form button clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'cancelEditTaskFormButton') {
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+
+            addTaskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewTaskButton)());
+        }
+    })
+
+    //Submit new task information when save task button clicked 
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'saveTaskButton') {
+
+            e.preventDefault();
+
+            let id = e.target.parentNode.parentNode.dataset.taskId;
+            console.log(id)
+
+            let name = document.getElementById('taskNameInput').value;
+            let details = document.getElementById('taskDetailsInput').value;
+            let date = document.getElementById('taskDateInput').value;
+            let time = document.getElementById('taskTimeInput').value;
+            let color = document.getElementById('colorSelector').value
+            // let list = listArray.find(list => list.active === true).name;
+            // let active = true;
+
+            if (name === '') {
+                alert('Enter a task name');
+                return;
+            }
+
+            if (details === '') {
+                details = 'No additional details'
+            }
+
+            if (date === '') {
+                date = '-';
+            }
+
+            if (time === '') {
+                time = '-';
+            }
+
+            if (time != '-' && date === '-') {
+                alert('Enter a due date');
+                return;
+            }
+
+            let task = taskArray.find(task => task.id === id);
+
+            task.editName(name);
+            task.editDetails(details);
+            task.editDate(date);
+            task.editTime(time);
+            task.editColor(color);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild((0,_modules_drawTasks__WEBPACK_IMPORTED_MODULE_6__.drawTasks)(taskArray,listArray));
+
+            if (document.getElementById('newTaskButton') === null) {
+                addTaskContainer.appendChild((0,_modules_drawAddNewButtons__WEBPACK_IMPORTED_MODULE_3__.drawNewTaskButton)());
+            }
+        }
+    });
 
 
 
@@ -416,7 +501,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "drawNewListForm": () => /* binding */ drawNewListForm,
 /* harmony export */   "drawEditListForm": () => /* binding */ drawEditListForm,
-/* harmony export */   "drawNewTaskForm": () => /* binding */ drawNewTaskForm
+/* harmony export */   "drawNewTaskForm": () => /* binding */ drawNewTaskForm,
+/* harmony export */   "drawEditTaskForm": () => /* binding */ drawEditTaskForm
 /* harmony export */ });
 //Draw Add New List Form
 const drawNewListForm = () => {
@@ -543,6 +629,100 @@ const drawNewTaskForm = () => {
     form.appendChild(colorSelector);
     form.appendChild(detailsInput);
     form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    return form;
+}
+
+const drawEditTaskForm = (taskArray , id) => {
+    let task = taskArray.find(task => task.id === id)
+
+    let form = document.createElement('form');
+    form.id = "editTaskFormContainer";
+    form.className = "edit-task-form-container"
+
+    let nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.id = 'taskNameInput'
+    nameInput.className = 'task-name-input'
+    nameInput.value = task.name;
+
+    // let dateInputLabel = document.createElement('label');
+    // dateInputLabel.innerHTML = 'Set date'
+
+    let dateInput = document.createElement('input');
+    if (task.date === '-') {
+        dateInput.type = 'text';
+        dateInput.placeholder = 'Date';
+        dateInput.setAttribute('onfocus',`(this.type='date')`)
+    } else {
+        dateInput.type = 'date';
+        dateInput.value = task.date;
+    }   
+    dateInput.id = 'taskDateInput';
+    dateInput.className = 'task-date-input';
+
+    // let timeInputLabel = document.createElement('label');
+    // timeInputLabel = "Set time"
+
+    let timeInput = document.createElement('input');
+    if (task.time === '-') {
+        timeInput.type = 'text';
+        timeInput.placeholder = 'Time';
+        timeInput.setAttribute('onfocus',`(this.type='time')`)
+    } else {
+        timeInput.type = 'time';
+        timeInput.value = task.time;
+    }
+    timeInput.id = 'taskTimeInput';
+    timeInput.className = 'task-time-input';
+
+    let selectColorLabel = document.createElement('label');
+    selectColorLabel.innerHTML = 'Select Color:';
+    selectColorLabel.className = 'select-color-label';
+    selectColorLabel.id = 'selectColorLabel'
+    
+
+    let colorSelector = document.createElement('select');
+    colorSelector.id = 'colorSelector';
+    colorSelector.className = 'color-selector'
+    colorSelector.value = task.color;
+    colorSelector.style.background = task.color;
+
+    let colorArray = ['#FFFFFF','#FF9AA2','#FFB7B2','#FFDAC1','#E2F0CB','#B5EAD7', '#C7CEEA']
+
+    for (let i = 0; i < colorArray.length; i++) {
+        let option = document.createElement('option');
+        option.value = colorArray[i];
+        option.id = `color-option-${colorArray[i]}`
+        option.className = 'color-option'
+        option.style.background = `${colorArray[i]}`;
+        colorSelector.appendChild(option);
+    }
+
+    let detailsInput = document.createElement('textarea');
+    detailsInput.placeholder = "Details";
+    detailsInput.id = 'taskDetailsInput';
+    detailsInput.className = 'task-details-input';
+    detailsInput.value = task.details;
+
+    let saveButton = document.createElement('button');
+    saveButton.id = 'saveTaskButton';
+    saveButton.className = 'save-task-button';
+    saveButton.innerHTML = 'Save';
+
+    let cancelButton = document.createElement('button');
+    cancelButton.id = 'cancelEditTaskFormButton';
+    cancelButton.className = 'cancel-task-form-button';
+    cancelButton.innerHTML = 'Cancel';
+
+    form.appendChild(nameInput);
+    form.appendChild(dateInput);
+    form.appendChild(timeInput);
+    form.appendChild(selectColorLabel);
+    form.appendChild(colorSelector);
+    form.appendChild(detailsInput);
+    form.appendChild(saveButton);
     form.appendChild(cancelButton);
 
     return form;
@@ -834,14 +1014,20 @@ const taskProto = {
     editDetails(newDetails) {
         this.details = newDetails;
     },
-    editDueDate(newDueDate) {
-        this.dueDate = newDueDate;
+    editDate(newDate) {
+        this.date = newDate;
+    },
+    editTime(newTime) {
+        this.time = newTime;
     },
     editColor(newColor) {
         this.color = newColor;
     },
     editList(newList) {
         this.list = newList;
+    },
+    editColor(newColor) {
+        this.color = newColor
     },
     toggleStatus() {
         if (this.completed === false) {
@@ -872,8 +1058,8 @@ const taskFactory = (name,details,date,time,color,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,name,details,dueDate,color,list) => {
-//     taskList.push(taskFactory(name,details,dueDate,color,list));
+// const addTask = (taskList,name,details,date,color,list) => {
+//     taskList.push(taskFactory(name,details,date,color,list));
 // }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskFactory);
