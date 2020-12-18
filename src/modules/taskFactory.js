@@ -8,14 +8,20 @@ const taskProto = {
     editDetails(newDetails) {
         this.details = newDetails;
     },
-    editDueDate(newDueDate) {
-        this.dueDate = newDueDate;
+    editDate(newDate) {
+        this.date = newDate;
+    },
+    editTime(newTime) {
+        this.time = newTime;
     },
     editColor(newColor) {
         this.color = newColor;
     },
     editList(newList) {
         this.list = newList;
+    },
+    editColor(newColor) {
+        this.color = newColor
     },
     toggleStatus() {
         if (this.completed === false) {
@@ -46,8 +52,8 @@ const taskFactory = (name,details,date,time,color,list,active) => {
 } 
 
 //Add Task Function (dont think this is need)
-// const addTask = (taskList,name,details,dueDate,color,list) => {
-//     taskList.push(taskFactory(name,details,dueDate,color,list));
+// const addTask = (taskList,name,details,date,color,list) => {
+//     taskList.push(taskFactory(name,details,date,color,list));
 // }
 
 export default taskFactory;

@@ -92,22 +92,26 @@ body {
 }
 
 .submit-list-button,
-.submit-task-button {
+.submit-task-button,
+.save-task-button {
     background-color: #6dc091;
 }
 
 .submit-list-button:hover,
-.submit-task-button:hover {
+.submit-task-button:hover,
+.save-task-button:hover {
     background-color: #6ed37f;
 }
 
 .submit-list-button:focus,
-.submit-task-button:focus {
+.submit-task-button:focus,
+.save-task-button:focus {
     box-shadow: 0 1px 4px rgba(0,0,0,.8);
 }
 
 .submit-list-button:active,
-.submit-task-button:active {
+.submit-task-button:active,
+.save-task-button:active {
     background-color: #888888;
 }
 
@@ -264,7 +268,8 @@ option.color-option:hover {
     background-color: white;
 }
 
-.new-task-form-container {
+.new-task-form-container,
+.edit-task-form-container {
     display: grid;
     grid-template-areas:
     'name name name name name date date'
@@ -311,11 +316,11 @@ option.color-option:hover {
     grid-area: details;
 }
 
-.submit-task-button {
+.submit-task-button,
+.save-task-button {
     grid-area: submit;
     width: 85%;
     margin: auto;
-    
 }
 
 .cancel-task-form-button {

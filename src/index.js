@@ -5,11 +5,11 @@ import listFactory from './modules/listFactory'
 //Import DOM Manipulation Functions
 import { initializePage } from './modules/initializePage'
 import { drawNewListButton, drawNewTaskButton } from './modules/drawAddNewButtons';
-import { drawNewListForm, drawEditListForm, drawNewTaskForm } from './modules/drawForms';
+import { drawNewListForm, drawEditListForm, drawNewTaskForm, drawEditTaskForm } from './modules/drawForms';
 import { drawLists } from './modules/drawLists'
 import { drawTasks } from './modules/drawTasks'
 
-console.log('This should work now')
+console.log('This should work now!!!')
 
 const runApp = (() => {
 
@@ -223,8 +223,7 @@ const runApp = (() => {
     //Open add new task form when Add new task clicked
     document.addEventListener('click',function(e) {
         if (e.target.id === 'newTaskButton') {
-            let newTaskButtonContainer = document.getElementById('newTaskButtonContainer')
-            newTaskButtonContainer.remove();
+            addTaskContainer.innerHTML = '';
 
             taskArray.map(task => task.active = false);
 
@@ -332,7 +331,93 @@ const runApp = (() => {
         }
     })
 
+    //Edit Task When Edit Clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'editTaskButton') {
 
+            let activeTasks = taskArray.filter(task => task.active === true);
+            if (activeTasks.length <= 1) {
+                document.getElementById('taskRowHeader').remove();
+            }
+
+            let id = e.target.parentNode.dataset.taskId;
+            let taskRow = document.querySelector(`[data-task-id ='${id}']`);
+            taskRow.className = 'edit-task-row-container';
+            taskRow.innerHTML = '';
+
+            document.getElementById('newTaskButton').remove();
+
+            taskRow.appendChild(drawEditTaskForm(taskArray,id));
+        }
+    });
+
+    //Remove edit task form when cancel edit task form button clicked
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'cancelEditTaskFormButton') {
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+
+            addTaskContainer.appendChild(drawNewTaskButton());
+        }
+    })
+
+    //Submit new task information when save task button clicked 
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'saveTaskButton') {
+
+            e.preventDefault();
+
+            let id = e.target.parentNode.parentNode.dataset.taskId;
+            console.log(id)
+
+            let name = document.getElementById('taskNameInput').value;
+            let details = document.getElementById('taskDetailsInput').value;
+            let date = document.getElementById('taskDateInput').value;
+            let time = document.getElementById('taskTimeInput').value;
+            let color = document.getElementById('colorSelector').value
+            // let list = listArray.find(list => list.active === true).name;
+            // let active = true;
+
+            if (name === '') {
+                alert('Enter a task name');
+                return;
+            }
+
+            if (details === '') {
+                details = 'No additional details'
+            }
+
+            if (date === '') {
+                date = '-';
+            }
+
+            if (time === '') {
+                time = '-';
+            }
+
+            if (time != '-' && date === '-') {
+                alert('Enter a due date');
+                return;
+            }
+
+            let task = taskArray.find(task => task.id === id);
+
+            task.editName(name);
+            task.editDetails(details);
+            task.editDate(date);
+            task.editTime(time);
+            task.editColor(color);
+
+            let taskContentContainer = document.getElementById('taskContentContainer');
+            taskContentContainer.innerHTML = '';
+            taskContentContainer.appendChild(drawTasks(taskArray,listArray));
+
+            if (document.getElementById('newTaskButton') === null) {
+                addTaskContainer.appendChild(drawNewTaskButton());
+            }
+        }
+    });
 
 
 
