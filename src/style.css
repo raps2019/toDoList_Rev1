@@ -1,6 +1,4 @@
 
-
-
 button {
     border-width: 0;
     height: 20px;
@@ -308,7 +306,7 @@ option.color-option:hover {
 .color-selector {
     margin: 5px;
     grid-area: selector;
-    border-width: 0 0 1px 0;
+    border-width: 1px;
 }
 
 .task-details-input{

@@ -140,6 +140,7 @@ const drawEditTaskForm = (taskArray , id) => {
     nameInput.id = 'taskNameInput'
     nameInput.className = 'task-name-input'
     nameInput.value = task.name;
+    nameInput.style.background = task.color;
 
     // let dateInputLabel = document.createElement('label');
     // dateInputLabel.innerHTML = 'Set date'
@@ -155,6 +156,7 @@ const drawEditTaskForm = (taskArray , id) => {
     }   
     dateInput.id = 'taskDateInput';
     dateInput.className = 'task-date-input';
+    dateInput.style.background = task.color;
 
     // let timeInputLabel = document.createElement('label');
     // timeInputLabel = "Set time"
@@ -170,6 +172,7 @@ const drawEditTaskForm = (taskArray , id) => {
     }
     timeInput.id = 'taskTimeInput';
     timeInput.className = 'task-time-input';
+    timeInput.style.background = task.color;
 
     let selectColorLabel = document.createElement('label');
     selectColorLabel.innerHTML = 'Select Color:';
@@ -180,7 +183,6 @@ const drawEditTaskForm = (taskArray , id) => {
     let colorSelector = document.createElement('select');
     colorSelector.id = 'colorSelector';
     colorSelector.className = 'color-selector'
-    colorSelector.value = task.color;
     colorSelector.style.background = task.color;
 
     let colorArray = ['#FFFFFF','#FF9AA2','#FFB7B2','#FFDAC1','#E2F0CB','#B5EAD7', '#C7CEEA']
@@ -191,6 +193,9 @@ const drawEditTaskForm = (taskArray , id) => {
         option.id = `color-option-${colorArray[i]}`
         option.className = 'color-option'
         option.style.background = `${colorArray[i]}`;
+        if (colorArray[i] === task.color) {
+            option.selected = true;
+        }
         colorSelector.appendChild(option);
     }
 
@@ -199,6 +204,7 @@ const drawEditTaskForm = (taskArray , id) => {
     detailsInput.id = 'taskDetailsInput';
     detailsInput.className = 'task-details-input';
     detailsInput.value = task.details;
+    detailsInput.style.background = task.color;
 
     let saveButton = document.createElement('button');
     saveButton.id = 'saveTaskButton';

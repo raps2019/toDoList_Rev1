@@ -9,6 +9,9 @@ import { drawNewListForm, drawEditListForm, drawNewTaskForm, drawEditTaskForm } 
 import { drawLists } from './modules/drawLists'
 import { drawTasks } from './modules/drawTasks'
 
+import "./style.css"
+
+
 console.log('This should work now!!!')
 
 const runApp = (() => {
