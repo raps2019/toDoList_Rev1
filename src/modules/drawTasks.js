@@ -1,28 +1,28 @@
 const drawTasks = (taskArray, listArray) => {
-  const div = document.createElement("div");
-  div.id = "taskRowsContainer";
-  div.className = "task-rows-container";
+  const div = document.createElement('div');
+  div.id = 'taskRowsContainer';
+  div.className = 'task-rows-container';
 
   // Draw Task Headers
-  const taskRowHeader = document.createElement("div");
-  taskRowHeader.id = "taskRowHeader";
-  taskRowHeader.className = "task-row-header";
+  const taskRowHeader = document.createElement('div');
+  taskRowHeader.id = 'taskRowHeader';
+  taskRowHeader.className = 'task-row-header';
 
-  const checkBoxHeader = document.createElement("h3");
-  checkBoxHeader.innerHTML = "Done";
-  checkBoxHeader.className = "completed-check-box-header";
+  const checkBoxHeader = document.createElement('h3');
+  checkBoxHeader.innerHTML = 'Done';
+  checkBoxHeader.className = 'completed-check-box-header';
 
-  const nameHeader = document.createElement("h3");
-  nameHeader.innerHTML = "Task";
-  nameHeader.className = "task-name-header";
+  const nameHeader = document.createElement('h3');
+  nameHeader.innerHTML = 'Task';
+  nameHeader.className = 'task-name-header';
 
-  const dateHeader = document.createElement("h3");
-  dateHeader.innerHTML = "Due Date";
-  dateHeader.className = "task-date-header";
+  const dateHeader = document.createElement('h3');
+  dateHeader.innerHTML = 'Due Date';
+  dateHeader.className = 'task-date-header';
 
-  const timeHeader = document.createElement("h3");
-  timeHeader.innerHTML = "Time";
-  timeHeader.className = "task-time-header";
+  const timeHeader = document.createElement('h3');
+  timeHeader.innerHTML = 'Time';
+  timeHeader.className = 'task-time-header';
 
   taskRowHeader.appendChild(checkBoxHeader);
   taskRowHeader.appendChild(nameHeader);
@@ -40,27 +40,27 @@ const drawTasks = (taskArray, listArray) => {
   );
 
   for (let i = 0; i < activeListTaskArray.length; i++) {
-    const taskRow = document.createElement("div");
+    const taskRow = document.createElement('div');
     taskRow.dataset.taskId = activeListTaskArray[i].id;
-    taskRow.className = "task-row";
+    taskRow.className = 'task-row';
     taskRow.style.background = activeListTaskArray[i].color;
 
-    const completedCheckBox = document.createElement("input");
-    completedCheckBox.type = "checkbox";
-    completedCheckBox.className = "completed-check-box";
-    completedCheckBox.id = "completedCheckBox";
+    const completedCheckBox = document.createElement('input');
+    completedCheckBox.type = 'checkbox';
+    completedCheckBox.className = 'completed-check-box';
+    completedCheckBox.id = 'completedCheckBox';
 
-    const nameP = document.createElement("p");
+    const nameP = document.createElement('p');
     nameP.innerHTML = activeListTaskArray[i].name;
-    nameP.className = "task-name";
+    nameP.className = 'task-name';
 
-    const dateP = document.createElement("p");
+    const dateP = document.createElement('p');
     dateP.innerHTML = activeListTaskArray[i].date;
-    dateP.className = "task-date";
+    dateP.className = 'task-date';
 
-    const timeP = document.createElement("p");
+    const timeP = document.createElement('p');
     timeP.innerHTML = activeListTaskArray[i].time;
-    timeP.className = "task-time";
+    timeP.className = 'task-time';
 
     taskRow.appendChild(completedCheckBox);
     taskRow.appendChild(nameP);
@@ -68,21 +68,21 @@ const drawTasks = (taskArray, listArray) => {
     taskRow.appendChild(timeP);
 
     if (activeListTaskArray[i].active === true) {
-      taskRow.className = "task-row-active";
+      taskRow.className = 'task-row-active';
 
-      const detailsP = document.createElement("p");
+      const detailsP = document.createElement('p');
       detailsP.innerHTML = activeListTaskArray[i].details;
-      detailsP.className = "task-details";
+      detailsP.className = 'task-details';
 
-      const editButton = document.createElement("button");
-      editButton.className = "edit-task-button";
-      editButton.id = "editTaskButton";
-      editButton.innerHTML = "Edit";
+      const editButton = document.createElement('button');
+      editButton.className = 'edit-task-button';
+      editButton.id = 'editTaskButton';
+      editButton.innerHTML = 'Edit';
 
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "delete-task-button";
-      deleteButton.id = "deleteTaskButton";
-      deleteButton.innerHTML = "Delete";
+      const deleteButton = document.createElement('button');
+      deleteButton.className = 'delete-task-button';
+      deleteButton.id = 'deleteTaskButton';
+      deleteButton.innerHTML = 'Delete';
 
       taskRow.appendChild(detailsP);
       taskRow.appendChild(editButton);
