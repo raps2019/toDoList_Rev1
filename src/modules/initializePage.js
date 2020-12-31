@@ -1,44 +1,43 @@
 const initializePage = () => {
-    let contentContainer = document.createElement('div');
-    contentContainer.id = 'contentContainer';
-    contentContainer.className = 'content-container';
+  const contentContainer = document.createElement('div');
+  contentContainer.id = 'contentContainer';
+  contentContainer.className = 'content-container';
 
-    let listContainer = document.createElement('div');
-    listContainer.id = 'listContainer';
-    listContainer.className = 'list-container';
+  const listContainer = document.createElement('div');
+  listContainer.id = 'listContainer';
+  listContainer.className = 'list-container';
 
-    let listHeader = document.createElement('div');
-    listHeader.innerHTML = 'Lists'
+  const listHeader = document.createElement('div');
+  listHeader.innerHTML = 'Lists';
 
-    let addListContainer = document.createElement('div');
-    addListContainer.id = 'addListContainer';
-    
-    let listContentContainer = document.createElement('div');
-    listContentContainer.id = 'listContentContainer'
+  const addListContainer = document.createElement('div');
+  addListContainer.id = 'addListContainer';
 
-    
-    listContainer.appendChild(listContentContainer);
-    listContainer.appendChild(addListContainer);
+  const listContentContainer = document.createElement('div');
+  listContentContainer.id = 'listContentContainer';
 
-    let taskContainer = document.createElement('div');
-    taskContainer.id = 'taskContainer';
-    taskContainer.className = 'task-container';
+  listContainer.appendChild(listContentContainer);
+  listContainer.appendChild(addListContainer);
 
-    let addTaskContainer = document.createElement('div');
-    addTaskContainer.id = 'addTaskContainer'
+  const taskContainer = document.createElement('div');
+  taskContainer.id = 'taskContainer';
+  taskContainer.className = 'task-container';
 
-    let taskContentContainer = document.createElement('div');
-    taskContentContainer.id = 'taskContentContainer';
-    
-    taskContainer.appendChild(taskContentContainer);
-    taskContainer.appendChild(addTaskContainer);
+  const addTaskContainer = document.createElement('div');
+  addTaskContainer.id = 'addTaskContainer';
 
-    contentContainer.appendChild(listContainer);
-    contentContainer.appendChild(taskContainer);
+  const taskContentContainer = document.createElement('div');
+  taskContentContainer.id = 'taskContentContainer';
 
-    return contentContainer;
-}
+  taskContainer.appendChild(taskContentContainer);
+  taskContainer.appendChild(addTaskContainer);
 
-export { 
-    initializePage,
-}
+  contentContainer.appendChild(listContainer);
+  contentContainer.appendChild(taskContainer);
+
+  return contentContainer;
+};
+
+export {
+  initializePage,
+};

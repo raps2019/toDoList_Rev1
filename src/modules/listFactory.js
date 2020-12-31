@@ -1,22 +1,21 @@
-//list Object 
+// list Object
 
-//list Object Prototype
+// list Object Prototype
 const listProto = {
-    editName(newName) {
-        this.name = newName;
-    }
-}
+  editName(newName) {
+    this.name = newName;
+  },
+};
 
-//list Object Factory Function
-const listFactory = (name,active) => {
-    let list = Object.create(listProto);
+// list Object Factory Function
+const listFactory = (name, active) => {
+  const list = Object.create(listProto);
 
-    list.name = name;
-    list.id = Date.now().toString();
-    list.active = active;
+  list.name = name;
+  list.id = Date.now().toString();
+  list.active = active;
 
-    return list;
-}
+  return list;
+};
 
 export default listFactory;
-
