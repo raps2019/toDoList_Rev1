@@ -1,11 +1,11 @@
 const drawNewListButton = () => {
-  const div = document.createElement('div');
-  div.setAttribute('id', 'newListButtonContainer');
+  const div = document.createElement("div");
+  div.setAttribute("id", "newListButtonContainer");
 
-  const button = document.createElement('button');
-  button.setAttribute('id', 'newListButton');
-  button.setAttribute('class', 'new-list-button');
-  button.innerHTML = '+ Add New List';
+  const button = document.createElement("button");
+  button.setAttribute("id", "newListButton");
+  button.setAttribute("class", "new-list-button");
+  button.innerHTML = "+ Add New List";
 
   div.appendChild(button);
 
@@ -13,20 +13,17 @@ const drawNewListButton = () => {
 };
 
 const drawNewTaskButton = () => {
-  const div = document.createElement('div');
-  div.setAttribute('id', 'newTaskButtonContainer');
+  const div = document.createElement("div");
+  div.setAttribute("id", "newTaskButtonContainer");
 
-  const button = document.createElement('button');
-  button.setAttribute('id', 'newTaskButton');
-  button.setAttribute('class', 'new-task-button');
-  button.innerHTML = '+ Add New Task';
+  const button = document.createElement("button");
+  button.setAttribute("id", "newTaskButton");
+  button.setAttribute("class", "new-task-button");
+  button.innerHTML = "+ Add New Task";
 
   div.appendChild(button);
 
   return div;
 };
 
-export {
-  drawNewListButton,
-  drawNewTaskButton,
-};
+export { drawNewListButton, drawNewTaskButton };
